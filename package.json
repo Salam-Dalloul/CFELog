@@ -1,0 +1,23 @@
+{
+  "name": "CFELog",
+  "version": "1.0.0",
+  "description": "CFE log, Gaza Sky Geeks",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "watch": "nodemon src/server.js"
+  },
+  "keywords": [],
+  "author": "SULTAN H.",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^4.13.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "nodemon": "^1.12.5"
+  },
+  "dependencies": {
+    "env2": "^2.2.0",
+    "pg": "^7.4.0"
+  }
+}
