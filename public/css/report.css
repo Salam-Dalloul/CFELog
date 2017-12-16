@@ -33,7 +33,7 @@ body{
 }
 
 section:nth-child(odd){
-  background-color: tomato;
+  background-color: gray;
 }
 
 .one-person{
@@ -42,10 +42,10 @@ section:nth-child(odd){
   align-items: center;
   flex-wrap: wrap;
   width: 100%;
-  border-left: 1vh solid green;
-  background-color: orange;
+  background-color: lightgray;
   padding: 2vh;
   margin-top: 1vh;
+  box-shadow: 0px 0px 2vh black;
 }
 
 
