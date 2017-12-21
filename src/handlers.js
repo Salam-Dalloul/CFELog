@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const query = require('./database/dbFunctions');
 
 
 const err404 = (req, res) => {
@@ -67,10 +68,29 @@ const reportPage = (req, res) => {
   });
 };
 
+const addPerson = (req, res) => {
+  let incomingData = '';
+  req.on('data', (chunk) => {
+    incomingData += chunk.toString();
+  });
+  req.on('end', () => {
+    const personObj = JSON.parse(incomingData);
+    query.addMember(personObj.name, personObj.phone, personObj.codeWarsBfr, personObj.codeWarsAft, personObj.freeCodeCampBfr, personObj.freeCodeCampAft, personObj.notes, (addError, result) => {
+      if (addError) {
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        return res.end('addError');
+      }
+      res.writeHead(302, { Location: '/report' });
+      res.end();
+    });
+  });
+};
+
 module.exports = {
   homePage,
   generic,
   reportPage,
   err404,
   err500,
+  addPerson,
 };

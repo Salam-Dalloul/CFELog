@@ -8,13 +8,16 @@
   </head>
   <body>
     <section class='container'>
-        <input placeholder="Name" id='name' aria-label="Participent Name" type="text" name="name" value="" class='input-fields'>
-        <input placeholder="Phone Number" id='phone' aria-label="Participent Phone Number" type="text" name="phone" value="" class='input-fields'>
-        <input placeholder="CodeWars Progress" id='code-wars' aria-label="Participent Progress in CodeWars" type="text" name="code-wars" value="" class='input-fields'>
-        <input placeholder="FreeCodeCamp Progress" id='free-code-camp' aria-label="Participent Progress in FreeCodeCamp" type="text" name="free-code-camp" value="" class='input-fields'>
-        <input placeholder="Notes" id='notes' aria-label="Notes on Participent" type="text" name="notes" value="" class='input-fields'></label>
-        <button name="submit-form" onclick="submitMember()" class='submit-button'>Submit</button>
+        <input placeholder="Name" id='name' aria-label="Participent Name" type="text" name="name" class='input-fields'>
+        <input placeholder="Phone Number" id='phone' aria-label="Participent Phone Number" type="text" name="phone" class='input-fields'>
+        <input placeholder="CodeWars Before" id='code-wars-before' aria-label="Participent Progress in CodeWars" type="text" name="code-wars" class='input-fields'>
+        <input placeholder="CodeWars After" id='code-wars-after' aria-label="Participent Progress in CodeWars" type="text" name="code-wars" class='input-fields'>
+        <input placeholder="FreeCodeCamp Before" id='free-code-camp-before' aria-label="Participent Progress in FreeCodeCamp" type="text" name="free-code-camp" class='input-fields'>
+        <input placeholder="FreeCodeCamp After" id='free-code-camp-after' aria-label="Participent Progress in FreeCodeCamp" type="text" name="free-code-camp" class='input-fields'>
+        <input placeholder="Notes" id='notes' aria-label="Notes on Participent" type="text" name="notes" class='input-fields'></label>
+        <button name="submit-form" onclick="submit()" class='submit-button'>Submit</button>
     </section>
+    <script type="text/javascript" src='public/js/request.js'></script>
     <script type="text/javascript" src='public/js/submit.js'></script>
   </body>
 </html>

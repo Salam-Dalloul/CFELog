@@ -6,8 +6,10 @@ const router = (req, res) => {
     handlers.homePage(req, res);
   } else if (endpoint.startsWith('/public/')) {
     handlers.generic(req, res);
-  } if (endpoint === '/report.html') {
+  } else if (endpoint === '/report') {
     handlers.reportPage(req, res);
+  } else if (endpoint === '/newPerson' && req.method === 'POST') {
+    handlers.addPerson(req, res);
   } else {
     handlers.err404(req, res);
   }
