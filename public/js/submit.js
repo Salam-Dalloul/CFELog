@@ -8,9 +8,12 @@ const isRequired = (valueToCheck) => {
   return false;
 };
 
+const inputFields = document.querySelectorAll('input');
+const requiredArray = [];
 const setRequired = () => {
-  const inputFields = document.querySelectorAll('input');
-  const requiredArray = [];
+  if (requiredArray.length > 0) {
+    requiredArray.length = 0;
+  }
   inputFields.forEach((inputField) => {
     if (isRequired(inputField.value) && inputField.id !== 'notes') {
       requiredArray.push(inputField.id);
@@ -20,11 +23,12 @@ const setRequired = () => {
 };
 
 const submit = () => {
-  console.log(setRequired().length);
   if (setRequired().length > 0) {
     const requiredArr = setRequired();
     requiredArr.forEach((element) => {
-      select(`#${element}`).className += ' focus';
+      if (!select(`#${element}`).className.includes('focus')) {
+        select(`#${element}`).className += ' focus';
+      }
     });
     const requiredErrorMsg = create('h3');
     requiredErrorMsg.className = 'required-error-msg';
