@@ -30,6 +30,7 @@ body{
   align-items: center;
   margin: 2.5%;
   flex-shrink: 1;
+  width: 85%
 }
 
 section:nth-child(odd){
@@ -91,5 +92,6 @@ section:nth-child(odd){
   .one-person{
     flex-wrap: wrap;
     flex-flow: wrap;
+    width: 90%
   }
 }

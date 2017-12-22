@@ -8,8 +8,10 @@ const router = (req, res) => {
     handlers.generic(req, res);
   } else if (endpoint === '/report') {
     handlers.reportPage(req, res);
-  } else if (endpoint === '/newPerson' && req.method === 'POST') {
-    handlers.addPerson(req, res);
+  } else if (endpoint === '/add-member' && req.method === 'POST') {
+    handlers.addNewMember(req, res);
+  } else if (endpoint === '/get-data') {
+    handlers.getMembersData(req, res);
   } else {
     handlers.err404(req, res);
   }

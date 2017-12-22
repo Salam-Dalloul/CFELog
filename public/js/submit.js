@@ -8,6 +8,21 @@ const isRequired = (valueToCheck) => {
   return false;
 };
 
+const createPopup = (msgContent, bgColor) => {
+  const section = create('section');
+  section.className = 'popup-section';
+  const sectionMsg = create('h3');
+  sectionMsg.className = 'popup-msg';
+  sectionMsg.style.backgroundColor = bgColor;
+  sectionMsg.textContent = msgContent;
+  section.appendChild(sectionMsg);
+  section.addEventListener('click', (e) => {
+    e.preventDefault();
+    select('body').removeChild(section);
+  });
+  select('body').appendChild(section);
+};
+
 const inputFields = document.querySelectorAll('input');
 const requiredArray = [];
 const setRequired = () => {
@@ -30,17 +45,7 @@ const submit = () => {
         select(`#${element}`).className += ' focus';
       }
     });
-    const requiredErrorMsg = create('h3');
-    requiredErrorMsg.className = 'required-error-msg';
-    requiredErrorMsg.textContent = 'Some Fields Are Required';
-    const errorSection = create('section');
-    errorSection.className = 'error-section';
-    errorSection.appendChild(requiredErrorMsg);
-    errorSection.addEventListener('click', (e) => {
-      e.preventDefault();
-      select('body').removeChild(errorSection);
-    });
-    select('body').appendChild(errorSection);
+    createPopup('Some Fields Are Required!!', 'rgba(255, 0, 0, 0.75)');
   } else {
     const personObj = {
       name: select('#name').value,
@@ -55,13 +60,15 @@ const submit = () => {
       method: 'POST',
       data: personObj,
     };
-
-
-    request('/newPerson', reqObject, (err, res) => {
+    request('/add-member', reqObject, (err, res) => {
       if (err) {
         return alert(`Error: ${err}`);
+      } else if (res === 'USER_ADDED') {
+        return createPopup('Added Successfully, Thanks!');
+      } else if (res.startsWith('ADDING_ERROR')) {
+        return createPopup(res, 'rgba(255, 0, 0, 0.75)');
       }
-      return res;
+      return createPopup('Error Occured, please try again.');
     });
   }
 };
