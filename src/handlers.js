@@ -68,7 +68,7 @@ const reportPage = (req, res) => {
   });
 };
 
-const addPerson = (req, res) => {
+const addNewMember = (req, res) => {
   let incomingData = '';
   req.on('data', (chunk) => {
     incomingData += chunk.toString();
@@ -77,12 +77,23 @@ const addPerson = (req, res) => {
     const personObj = JSON.parse(incomingData);
     query.addMember(personObj.name, personObj.phone, personObj.codeWarsBfr, personObj.codeWarsAft, personObj.freeCodeCampBfr, personObj.freeCodeCampAft, personObj.notes, (addError, result) => {
       if (addError) {
-        res.writeHead(500, { 'Content-Type': 'text/plain' });
-        return res.end('addError');
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        return res.end(`ADDING_ERROR: ${addError}`);
       }
-      res.writeHead(302, { Location: '/report' });
-      res.end();
+      res.writeHead(200, { 'Content-Type': 'text/plain' });
+      res.end('USER_ADDED');
     });
+  });
+};
+
+const getMembersData = (req, res) => {
+  query.getAllMembers((getAllMembersError, membersData) => {
+    if (getAllMembersError) {
+      res.writeHead(200, { 'Content-Type': 'text/membersData)membersData)plain' });
+      return res.end('SELECTING_MEMBERS_FAILED');
+    }
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    return res.end(JSON.stringify(membersData));
   });
 };
 
@@ -92,5 +103,6 @@ module.exports = {
   reportPage,
   err404,
   err500,
-  addPerson,
+  addNewMember,
+  getMembersData,
 };

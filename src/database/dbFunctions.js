@@ -8,14 +8,26 @@ const addMember = (name, phone, cwb, cwa, fccb, fcca, notes, cb) => {
 
   connect.query(addQuery, (addError, success) => {
     if (addError) {
-      return cb(`Add Error Occured${addError}`, null);
+      return cb(addError, null);
     }
-    return cb(null, 'Added Successfully');
+    return cb(null, 'ADDED_SUCCESSFULLY');
+  });
+};
+
+const getAllMembers = (cb) => {
+  const selectMembersQuery = {
+    text: 'SELECT * FROM members',
+  };
+  connect.query(selectMembersQuery, (selectAllMembersError, selectResult) => {
+    if (selectAllMembersError) {
+      return cb(selectAllMembersError, null);
+    }
+    return cb(null, selectResult.rows);
   });
 };
 
 
 module.exports = {
   addMember,
-
+  getAllMembers,
 };
