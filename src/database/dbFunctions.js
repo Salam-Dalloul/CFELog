@@ -26,8 +26,37 @@ const getAllMembers = (cb) => {
   });
 };
 
+const updateMember = (personObj, cb) => {
+  const updateMemberQuery = {
+    text: 'UPDATE members SET name=$1, phone=$2, cwb=$3, cwa=$4, fccb=$5, fcca=$6, notes=$7 WHERE id = $8',
+    values: [`${personObj.name}`, personObj.phone, personObj.codeWarsBfr, personObj.codeWarsAft, personObj.freeCodeCampBfr, personObj.freeCodeCampAft, `${personObj.notes}`, personObj.id],
+  };
+  connect.query(updateMemberQuery, (updateError, success) => {
+    if (updateError) {
+      console.log(updateError);
+      return cb('UPDATE_FAILED', null);
+    }
+    return cb(null, 'UPDATE_DONE');
+  });
+};
+
+const deleteMember = (personId, cb) => {
+  const deleteMemberQuery = {
+    text: 'DELETE FROM members WHERE id=$1',
+    values: [personId],
+  };
+  connect.query(deleteMemberQuery, (deleteError, successDeleting) => {
+    if (deleteError) {
+      return cb('DELETE_FAILED', null);
+    }
+    return cb(null, 'DELETE_DONE');
+  });
+};
+
 
 module.exports = {
   addMember,
   getAllMembers,
+  updateMember,
+  deleteMember,
 };

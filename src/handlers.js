@@ -100,7 +100,7 @@ const addNewMember = (req, res) => {
 const getMembersData = (req, res) => {
   query.getAllMembers((getAllMembersError, membersData) => {
     if (getAllMembersError) {
-      res.writeHead(200, { 'Content-Type': 'text/membersData)membersData)plain' });
+      res.writeHead(200, { 'Content-Type': 'text/plain' });
       return res.end('SELECTING_MEMBERS_FAILED');
     }
     res.writeHead(200, { 'Content-Type': 'text/plain' });
@@ -119,6 +119,42 @@ const publicInfo = (req, res) => {
   });
 };
 
+const updateMember = (req, res) => {
+  let incomingData = '';
+  req.on('data', (chunk) => {
+    incomingData += chunk.toString();
+  });
+  req.on('end', () => {
+    const personObj = JSON.parse(incomingData);
+    query.updateMember(personObj, (updateMemberError, updateSuccessful) => {
+      if (updateMemberError) {
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        return res.end('UPDATING_MEMBER_FAILED');
+      }
+      res.writeHead(200, { 'Content-Type': 'text/plain' });
+      return res.end('UPDATING_MEMBER_DONE');
+    });
+  });
+};
+
+const deleteMember = (req, res) => {
+  let incomingData = '';
+  req.on('data', (chunk) => {
+    incomingData += chunk.toString();
+  });
+  req.on('end', () => {
+    const personObj = JSON.parse(incomingData);
+    query.deleteMember(personObj, (deletingMemberError, deleteSuccessful) => {
+      if (deletingMemberError) {
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        return res.end('DELETING_MEMBER_FAILED');
+      }
+      res.writeHead(200, { 'Content-Type': 'text/plain' });
+      return res.end('DELETING_MEMBER_DONE');
+    });
+  });
+};
+
 module.exports = {
   homePage,
   generic,
@@ -129,4 +165,6 @@ module.exports = {
   addNewMember,
   getMembersData,
   publicInfo,
+  updateMember,
+  deleteMember,
 };
