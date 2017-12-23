@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Coding For Everone - Registery</title>
+    <link rel="stylesheet" href="public/css/false-action.css">
+    <link rel="shortcut icon" href="public/img/favicon.ico" type="image/x-icon">
   </head>
   <body>
-    <h1>500</h1>
+    <h1 class="m-heading">500!</h1>
+    <h2 class="m-msg">Internal Server Error, Sorry :(</h2>
+    <script type="text/javascript">
+      document.querySelector('body').addEventListener('click', (e) => {
+        e.preventDefault();
+        alert('Wanna go back home?');
+        window.location.pathname='/';
+      })
+    </script>
   </body>
 </html>

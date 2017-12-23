@@ -6,12 +6,16 @@ const router = (req, res) => {
     handlers.homePage(req, res);
   } else if (endpoint.startsWith('/public/')) {
     handlers.generic(req, res);
+  } else if (endpoint === '/add-member-area') {
+    handlers.addMemberPage(req, res);
   } else if (endpoint === '/report') {
     handlers.reportPage(req, res);
   } else if (endpoint === '/add-member' && req.method === 'POST') {
     handlers.addNewMember(req, res);
   } else if (endpoint === '/get-data') {
     handlers.getMembersData(req, res);
+  } else if (endpoint === '/public-info') {
+    handlers.publicInfo(req, res);
   } else {
     handlers.err404(req, res);
   }

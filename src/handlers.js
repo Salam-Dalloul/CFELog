@@ -57,6 +57,17 @@ const generic = (req, res) => {
   });
 };
 
+const addMemberPage = (req, res) => {
+  fs.readFile(path.join(__dirname, '..', 'public', 'add-member.html'), (errIndex, fileAddMember) => {
+    if (errIndex) {
+      err500(req, res);
+    } else {
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(fileAddMember);
+    }
+  });
+};
+
 const reportPage = (req, res) => {
   fs.readFile(path.join(__dirname, '..', 'public', 'report.html'), (errReport, fileReport) => {
     if (errReport) {
@@ -97,12 +108,25 @@ const getMembersData = (req, res) => {
   });
 };
 
+const publicInfo = (req, res) => {
+  fs.readFile(path.join(__dirname, '..', 'public', 'public-info.html'), (errReport, fileReport) => {
+    if (errReport) {
+      err500(req, res);
+    } else {
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(fileReport);
+    }
+  });
+};
+
 module.exports = {
   homePage,
   generic,
+  addMemberPage,
   reportPage,
   err404,
   err500,
   addNewMember,
   getMembersData,
+  publicInfo,
 };
