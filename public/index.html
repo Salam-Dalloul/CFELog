@@ -7,13 +7,31 @@
     <link rel="shortcut icon" href="public/img/favicon.ico" type="image/x-icon">
   </head>
   <body>
-    <section class="nav-bar">
-      <a href='/add-member-area' class="nav-a" aria-label="Goo to Add a Member Window" title='Add Member'><label class="nav-labels">Add Member</label>
-      </a>
-      <a href='/report' class="nav-a" aria-label="Go to Report Window" title='View Report'><label class="nav-labels">View Report</label>
-      </a>
-    </section>
-    <h1 class="heading-title">Coding For EVERYONE!</h1>
-    <img src="public/img/1-08.png" alt="Gaza Sky Geeks Logo" class="logo-img">
+    <div id="wrapper">
+
+    	<form name="login-form" class="login-form" action="" method="post">
+
+    		<div class="header">
+    		<h1>Login Form</h1>
+    		<span>Login to grant access onto CFE Log Panel.</span>
+    		</div>
+
+    		<div class="content">
+    		<input name="username" type="text" class="input username" placeholder="Username" />
+    		<div class="user-icon"></div>
+    		<input name="password" type="password" class="input password" placeholder="Password" />
+    		<div class="pass-icon"></div>
+    		</div>
+
+    		<div class="footer">
+    		<input type="submit" name="submit" value="Login" class="button" />
+    		</div>
+
+    	</form>
+
+    </div>
+    <div class="gradient"></div>
+    <script type="text/javascript" src="public/js/request.js"></script>
+    <script type="text/javascript" src="public/js/login.js"></script>
   </body>
 </html>

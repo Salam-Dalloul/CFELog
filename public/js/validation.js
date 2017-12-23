@@ -1,4 +1,3 @@
-
 const isRequired = (valueToCheck) => {
   if (!valueToCheck) {
     return true;

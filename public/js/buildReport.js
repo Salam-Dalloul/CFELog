@@ -138,20 +138,22 @@ const createDeleteBtn = (memberId) => {
   deleteBtn.textContent = '✖';
   deleteBtn.addEventListener('click', (event) => {
     event.preventDefault();
-    const requestObj = {
-      data: memberId,
-      method: 'POST',
-    };
-    request('/delete-member', requestObj, (errorDeleting, successfulDeleting) => {
-      if (errorDeleting) {
-        return createPopup('Failed to Update..', 'red');
-      }
-      return createPopup('Deleted Successfylly', 'red');
-    });
+    const confirmDelete = confirm('Are You Sure About This?');
+    if (confirmDelete) {
+      const requestObj = {
+        data: memberId,
+        method: 'POST',
+      };
+      request('/delete-member', requestObj, (errorDeleting, successfulDeleting) => {
+        if (errorDeleting) {
+          return createPopup('Failed to Update..', 'red');
+        }
+        return createPopup('Deleted Successfylly', 'red');
+      });
+    }
   });
   return deleteBtn;
 };
-
 const createArticle = (member) => {
   const onePersonArticle = create('article');
   onePersonArticle.className = 'one-person';

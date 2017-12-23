@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Bree+Serif);
+
 * {
   padding: 0;
   margin: 0;
@@ -12,6 +14,8 @@ body{
   min-height: 75vh;
   margin-top: 12.5vh;
   background-color: lightgray;
+  background: url('http://www.demo.amitjakhu.com/login-form/images/bg.png');
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
 .head{
@@ -117,15 +121,16 @@ body{
 }
 
 .popup-section{
-  position: absolute;
-  z-index: 1;
   display: flex;
   align-self: center;
   align-items: center;
   justify-content: center;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
   height: 100%;
   width: 100%;
-
 }
 .popup-msg{
   display: flex;
