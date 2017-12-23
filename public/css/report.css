@@ -18,6 +18,7 @@ body{
   display: flex;
   flex-direction: column;
   align-items: center;
+  top: 15px;
   justify-content: center;
   margin-bottom: 10vh;
   text-align: center;
@@ -28,6 +29,7 @@ body{
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
   margin: 2.5%;
   flex-shrink: 1;
   width: 85%
@@ -87,6 +89,126 @@ section:nth-child(odd){
 .edit-button:hover{
   background-color: lightgreen;
 }
+
+
+.nav-bar{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  min-width: 25%;
+  top: 15vh;
+  background-color: white;
+  background-color: lightgray!important;
+  box-shadow: 0px 0px 2vh black;
+  margin: 3vh
+}
+
+.nav-a{
+  text-align: left;
+  padding: 1vh;
+  padding-left: 2vh;
+  margin: 0.5vh;
+  margin-left: 1.5vh;
+  margin-right: 1.5vh;
+  text-decoration: none;
+  font-size: 16px;
+  color: black;
+  font-family: monospace;
+}
+
+.nav-labels{
+  cursor: pointer;
+}
+
+.popup-section{
+  position: fixed;
+  z-index: 1;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  width: 100%;
+
+}
+.popup-msg{
+  display: flex;
+  justify-content: center;
+  font-size: 150%!important;
+  width: 25%;
+  text-align: center;
+  margin-top: 1vh;
+  background-color: rgba(2, 255, 0, 0.62);
+  color: white;
+  border: 5px solid black;
+  border-radius: 15px;
+  padding: 3%
+}
+
+.edit-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 35%;
+  height: 85vh;
+  min-height: 85%;
+  background-color: lightgray;
+  border-radius: 5vh;
+  border-right: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  box-shadow: 0px 0px 2vh black;
+}
+
+.input-fields{
+  display: flex;
+  width: 80%;
+  height: 2vh;
+  padding: 2.5vh;
+  font-family: cursive;
+  font-size: 2vh;
+  border: 1px;
+  border-radius: 2vh;
+  margin-bottom: 1vh;
+  cursor: text;
+}
+
+.input-fields:focus{
+  outline: none;
+  border-left: 3px solid green;
+  border-right: 3px solid green;
+}
+
+
+#notes {
+  height: 15vh;
+}
+
+.submit-button{
+  width: 50%;
+  height: 5vh;
+  border: none;
+  border-left: 1vh solid green;
+  font-size: 2vh;
+  font-family: cursive;
+}
+
+.submit-button:hover{
+  cursor: pointer;
+  background-color: lightgreen;
+}
+
+.submit-button:focus{
+  outline: none;
+}
+
+.focus{
+  border-left: 3px solid red;
+  border-right: 3px solid red;
+}
+
 
 @media (max-width: 880px) {
   .one-person{

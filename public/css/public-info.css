@@ -1,0 +1,33 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body{
+  display: flex;
+  flex-direction: column;
+  min-height: 75vh;
+  margin-top: 7.5vh;
+  background-color: lightgray;
+}
+
+.m-heading{
+  display: flex;
+  font-size: 200%;
+  color: rgb(244, 67, 54);
+  align-self: center;
+}
+
+.m-label{
+  margin-left: 5vh;
+  margin-top: 5vh;
+  font-size: 150%;
+  color: rgb(0, 110, 255);
+  text-align: left;
+}
+
+.m-body{
+  font-size: 100%;
+  color: black;
+  text-align: left;
+}

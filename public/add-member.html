@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Coding For Everone - Registery</title>
+    <link rel="stylesheet" href="public/css/add-member.css">
+    <link rel="shortcut icon" href="public/img/favicon.ico" type="image/x-icon">
+  </head>
+  <body>
+    <section class="side-bar">
+      <a href='/' class="bar-a" aria-label="Goo to Add a Member Window" title='Add Member'><label class="bar-labels">Home</label>
+      </a>
+      <a href='/report' class="bar-a" aria-label="Go to Report Window" title='View Report'><label class="bar-labels">View Report</label>
+      </a>
+    </section>
+    <section class='container'>
+        <input placeholder="Name" id='name' aria-label="Participent Name" type="text" name="name" class='input-fields'>
+        <input placeholder="Phone Number" id='phone' aria-label="Participent Phone Number" type="text" name="phone" class='input-fields'>
+        <input placeholder="CodeWars Before" id='code-wars-before' aria-label="Participent Progress in CodeWars" type="text" name="code-wars" class='input-fields'>
+        <input placeholder="CodeWars After" id='code-wars-after' aria-label="Participent Progress in CodeWars" type="text" name="code-wars" class='input-fields'>
+        <input placeholder="FreeCodeCamp Before" id='free-code-camp-before' aria-label="Participent Progress in FreeCodeCamp" type="text" name="free-code-camp" class='input-fields'>
+        <input placeholder="FreeCodeCamp After" id='free-code-camp-after' aria-label="Participent Progress in FreeCodeCamp" type="text" name="free-code-camp" class='input-fields'>
+        <input placeholder="Notes" id='notes' aria-label="Notes on Participent" type="text" name="notes" class='input-fields'></label>
+        <button name="submit-form" onclick="submit()" class='submit-button'>Submit</button>
+    </section>
+    <script type="text/javascript" src='public/js/validation.js'></script>
+    <script type="text/javascript" src='public/js/request.js'></script>
+    <script type="text/javascript" src='public/js/submit.js'></script>
+  </body>
+</html>
