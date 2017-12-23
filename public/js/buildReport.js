@@ -1,11 +1,48 @@
 const select = selector => document.querySelector(selector);
 const create = type => document.createElement(type);
 
+const createPopup = (msgContent, bgColor) => {
+  const section = create('section');
+  section.className = 'popup-section';
+  const sectionMsg = create('h3');
+  sectionMsg.className = 'popup-msg';
+  sectionMsg.style.backgroundColor = bgColor;
+  sectionMsg.textContent = msgContent;
+  section.appendChild(sectionMsg);
+  section.addEventListener('click', (e) => {
+    e.preventDefault();
+    select('body').removeChild(section);
+    window.location.pathname = '/report';
+  });
+  select('body').appendChild(section);
+};
+
+const updateMember = (memberId) => {
+  const personObj = {
+    data: {
+      id: memberId,
+      name: select('#name').value,
+      phone: select('#phone').value,
+      codeWarsBfr: select('#code-wars-before').value,
+      codeWarsAft: select('#code-wars-after').value,
+      freeCodeCampBfr: select('#free-code-camp-before').value,
+      freeCodeCampAft: select('#free-code-camp-after').value,
+      notes: select('#notes').value,
+    },
+    method: 'POST',
+  };
+  request('/update-member', personObj, (err, response) => {
+    if (err || response === 'UPDATING_MEMBER_FAILED') {
+      return createPopup('Failed to Update..', 'red');
+    }
+    return createPopup('Updated Successfylly');
+  });
+};
+
 const createEditSection = (member) => {
   const container = create('section');
   container.className = 'edit-container';
 
-  console.log(member);
   const personObj = {
     name: create('input'),
     phone: create('input'),
@@ -70,7 +107,7 @@ const createEditSection = (member) => {
   submitBtn.textContent = 'Submit';
   submitBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    updateMember(memberID);
+    updateMember(member.id);
   });
   container.appendChild(personObj.name);
   container.appendChild(personObj.phone);
@@ -79,7 +116,7 @@ const createEditSection = (member) => {
   container.appendChild(personObj.freeCodeCampBfr);
   container.appendChild(personObj.freeCodeCampAft);
   container.appendChild(personObj.notes);
-  console.log(container);
+  container.appendChild(submitBtn);
   return container;
 };
 
@@ -88,19 +125,29 @@ const createEditBtn = (member) => {
   editBtn.className = 'edit-button button';
   editBtn.textContent = '🖉';
   editBtn.addEventListener('click', (event) => {
+    event.preventDefault();
     const editContainer = createEditSection(member);
     select('body').appendChild(editContainer);
-    event.preventDefault();
   });
   return editBtn;
 };
 
-const createDeleteBtn = (member) => {
+const createDeleteBtn = (memberId) => {
   const deleteBtn = create('button');
   deleteBtn.className = 'delete-button button';
   deleteBtn.textContent = '✖';
   deleteBtn.addEventListener('click', (event) => {
     event.preventDefault();
+    const requestObj = {
+      data: memberId,
+      method: 'POST',
+    };
+    request('/delete-member', requestObj, (errorDeleting, successfulDeleting) => {
+      if (errorDeleting) {
+        return createPopup('Failed to Update..', 'red');
+      }
+      return createPopup('Deleted Successfylly', 'red');
+    });
   });
   return deleteBtn;
 };
@@ -126,28 +173,24 @@ const createArticle = (member) => {
     notes: create('label'),
   };
 
-  infoLables.id.className = 'info-labels';
   infoLables.name.className = 'info-labels';
   infoLables.phone.className = 'info-labels';
   infoLables.codeWars.className = 'info-labels';
   infoLables.freeCodeCamp.className = 'info-labels';
   infoLables.notes.className = 'info-labels';
 
-  dataLabels.id.className = 'data-labels';
   dataLabels.name.className = 'data-labels';
   dataLabels.phone.className = 'data-labels';
   dataLabels.codeWars.className = 'data-labels';
   dataLabels.freeCodeCamp.className = 'data-labels';
   dataLabels.notes.className = 'data-labels';
 
-  infoLables.id.textContent = 'Id';
   infoLables.name.textContent = 'Name';
   infoLables.phone.textContent = 'Phone';
   infoLables.codeWars.textContent = 'CodeWars';
   infoLables.freeCodeCamp.textContent = 'FreeCodeCamp';
   infoLables.notes.textContent = 'Notes';
 
-  dataLabels.id.textContent = `${member.id}`;
   dataLabels.name.textContent = `${member.name}`;
   dataLabels.phone.textContent = `${member.phone}`;
   dataLabels.codeWars.textContent = `${member.cwb} - ${member.cwa}`;
@@ -155,10 +198,8 @@ const createArticle = (member) => {
   dataLabels.notes.textContent = `${member.notes}`;
 
   const editBtn = createEditBtn(member);
-  const deleteBtn = createDeleteBtn(member);
+  const deleteBtn = createDeleteBtn(member.id);
 
-  onePersonArticle.appendChild(infoLables.id);
-  onePersonArticle.appendChild(dataLabels.id);
   onePersonArticle.appendChild(infoLables.name);
   onePersonArticle.appendChild(dataLabels.name);
   onePersonArticle.appendChild(infoLables.phone);
@@ -190,7 +231,7 @@ const buildDom = (arrayOfMembers) => {
 const getReport = () => {
   request('/get-data', { method: 'GET' }, (err, res) => {
     if (err) {
-      return console.log(err);
+      createPopup('Something went wrong', 'red');
     }
     buildDom(JSON.parse(res));
   });

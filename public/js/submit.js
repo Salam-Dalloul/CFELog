@@ -45,6 +45,13 @@ const submit = () => {
       if (err) {
         return alert(`Error: ${err}`);
       } else if (res === 'USER_ADDED') {
+        select('#name').value = '';
+        select('#phone').value = '';
+        select('#code-wars-before').value = '';
+        select('#code-wars-after').value = '';
+        select('#free-code-camp-before').value = '';
+        select('#free-code-camp-after').value = '';
+        select('#notes').value = '';
         return createPopup('Added Successfully, Thanks!');
       } else if (res.startsWith('ADDING_ERROR')) {
         return createPopup(res, 'rgba(255, 0, 0, 0.75)');

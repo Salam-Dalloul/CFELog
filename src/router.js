@@ -16,6 +16,10 @@ const router = (req, res) => {
     handlers.getMembersData(req, res);
   } else if (endpoint === '/public-info') {
     handlers.publicInfo(req, res);
+  } else if (endpoint === '/update-member') {
+    handlers.updateMember(req, res);
+  } else if (endpoint === '/delete-member') {
+    handlers.deleteMember(req, res);
   } else {
     handlers.err404(req, res);
   }
