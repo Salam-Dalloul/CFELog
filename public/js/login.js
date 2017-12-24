@@ -8,7 +8,6 @@ const loginBtn = select('.button');
 // const request = (url, reqObject, cb) => {
 
 loginBtn.addEventListener('click', (e) => {
-  console.log(username);
   e.preventDefault();
   request('/login', {
     data: {
@@ -20,6 +19,7 @@ loginBtn.addEventListener('click', (e) => {
     if (loginError) {
       return console.log(`${loginError}`);
     }
+    window.location.pathname = '/report';
     return console.log('confirmed');
   });
 });

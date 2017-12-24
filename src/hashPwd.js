@@ -1,12 +1,13 @@
 const bcrypt = require('bcryptjs');
 
 const hashPassword = (pwd, cb) => {
-  bcrypt.genSalt(10, (errorHashing, hashedPwd) => {
-    if (errorHashing) {
-      console.log(errorHashing);
-      return cb(errorHashing, null);
-    }
-    return cb(null, hashedPwd);
+  bcrypt.genSalt(10, (errorHashing, salt) => {
+    bcrypt.hash(pwd, salt, (errHashingWithSalt, hash) => {
+      if (errHashingWithSalt) {
+        return cb(errHashingWithSalt, null);
+      }
+      return cb(null, hash);
+    });
   });
 };
 
