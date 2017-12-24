@@ -1,0 +1,158 @@
+@import url(https://fonts.googleapis.com/css?family=Bree+Serif);
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  min-height: 75vh;
+  margin-top: 5vh;
+  background-color: lightgray;
+  background: url('http://www.demo.amitjakhu.com/login-form/images/bg.png');
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+.side-bar{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-right: 5vh;
+  width: 15%;
+  background-color: white;
+  border-right: 0.5vh dotted black;
+  border-top-left-radius: 5vh;
+  border-bottom-left-radius: 5vh;
+  height: 90vh;
+  min-height: 85%;
+  background-color: lightgray;
+  box-shadow: 0px 0px 2vh black;
+}
+
+.bar-a{
+  text-align: left;
+  padding: 1vh;
+  padding-left: 2vh;
+  margin: 0.3vh;
+  margin-top: 0.7vh;
+  margin-bottom: 0.7vh;
+  text-decoration: none;
+  font-size: 16px;
+  color: black;
+  font-family: monospace;
+}
+
+.bar-labels{
+  cursor: pointer;
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  min-width: 40%;
+  height: 90vh;
+  min-height: 90%;
+  background-color: lightgray;
+  border-radius: 5vh;
+  border-right: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  box-shadow: 0px 0px 2vh black;
+}
+
+.input-fields{
+  display: flex;
+  width: 90%;
+  height: 1vh;
+  padding: 2.5vh;
+  font-family: cursive;
+  font-size: 2vh;
+  border: 1px;
+  border-radius: 2vh;
+  margin-bottom: 1vh;
+  cursor: text;
+}
+
+.input-fields:focus{
+  outline: none;
+  border-left: 3px solid green;
+  border-right: 3px solid green;
+}
+
+
+#notes {
+  height: 15vh;
+}
+
+.submit-button{
+  width: 80%;
+  height: 5vh;
+  border: none;
+  border-left: 1vh solid green;
+  font-size: 2vh;
+  font-family: cursive;
+  margin-left: 5vh
+}
+
+.submit-button:hover{
+  cursor: pointer;
+  background-color: lightgreen;
+}
+
+.submit-button:focus{
+  outline: none;
+}
+
+.focus{
+  border-left: 3px solid red;
+  border-right: 3px solid red;
+}
+
+.close-button{
+  align-self: center;
+  width: 10%;
+  height: 10%;
+  justify-content: center;
+  font-size: 100%;
+  border: none;
+  border-radius: 5px;
+}
+
+.popup-section{
+  position: fixed;
+  z-index: 1;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  width: 100%;
+
+}
+.popup-msg{
+  display: flex;
+  justify-content: center;
+  font-size: 150%!important;
+  width: 25%;
+  text-align: center;
+  margin-top: 1vh;
+  background-color: rgba(2, 255, 0, 0.62);
+  color: white;
+  border: 5px solid black;
+  border-radius: 15px;
+  padding: 3%
+}
+
+.inputs-labels{
+  width: 90%;
+  font-size: 14px;
+  margin-left: 3vh;
+  font-family: cursive;
+}

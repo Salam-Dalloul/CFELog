@@ -20,6 +20,12 @@ const router = (req, res) => {
     handlers.updateMember(req, res);
   } else if (endpoint === '/delete-member') {
     handlers.deleteMember(req, res);
+  } else if (endpoint === '/login') {
+    handlers.login(req, res);
+  } else if (endpoint === '/add-new-user-area') {
+    handlers.addNewUserPage(req, res);
+  } else if (endpoint === '/add-new-user') {
+    handlers.addNewUser(req, res);
   } else {
     handlers.err404(req, res);
   }

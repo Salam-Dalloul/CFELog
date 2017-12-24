@@ -53,10 +53,39 @@ const deleteMember = (personId, cb) => {
   });
 };
 
+const addNewUser = (newUser, cb) => {
+  const addUserQuery = {
+    text: 'INSERT INTO users (username, password, access_token, role) VALUES ($1, $2, $3, $4)',
+    values: [`${newUser.username}`, `${newUser.password}`, `${newUser.access_token}`, `${newUser.role}`],
+  };
+
+  connect.query(addUserQuery, (addNewUserError, successUserAdding) => {
+    if (addNewUserError) {
+      return cb(addNewUserError, null);
+    }
+    return cb(null, 'USER_ADDED_SUCCESSFULLY');
+  });
+};
+
+const getLoginDetails = (username, cb) => {
+  const findPwd = {
+    text: 'SELECT * FROM users WHERE username = $1',
+    values: [username],
+  };
+  connect.query(findPwd, (findPwdError, requiredUser) => {
+    if (findPwdError) {
+      return cb(findPwdError, null);
+    }
+    return cb(null, requiredUser.rows[0]);
+  });
+};
+
 
 module.exports = {
   addMember,
   getAllMembers,
   updateMember,
   deleteMember,
+  getLoginDetails,
+  addNewUser,
 };
