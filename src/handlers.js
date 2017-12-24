@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const query = require('./database/dbFunctions');
-
+const bcryptFunctions = require('./hashPwd');
+const token = require('./createToken');
 
 const err404 = (req, res) => {
   fs.readFile(path.join(__dirname, '..', 'public', '404.html'), (err404Failed, file404) => {
@@ -18,7 +19,8 @@ const err404 = (req, res) => {
 const err500 = (req, res) => {
   fs.readFile(path.join(__dirname, '..', 'public', '500.html'), (err500Failed, file500) => {
     if (err500Failed) {
-      err404(req, res);
+      res.writeHead(500, { 'Content-Type': 'text/html' });
+      res.end(file500);
     } else {
       res.writeHead(500, { 'Content-Type': 'text/html' });
       res.end(file500);
@@ -88,8 +90,8 @@ const addNewMember = (req, res) => {
     const personObj = JSON.parse(incomingData);
     query.addMember(personObj.name, personObj.phone, personObj.codeWarsBfr, personObj.codeWarsAft, personObj.freeCodeCampBfr, personObj.freeCodeCampAft, personObj.notes, (addError, result) => {
       if (addError) {
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
-        return res.end(`ADDING_ERROR: ${addError}`);
+        res.writeHead(401, { 'Content-Type': 'text/plain' });
+        return res.end('ADDING_ERROR_FAILED');
       }
       res.writeHead(200, { 'Content-Type': 'text/plain' });
       res.end('USER_ADDED');
@@ -100,7 +102,7 @@ const addNewMember = (req, res) => {
 const getMembersData = (req, res) => {
   query.getAllMembers((getAllMembersError, membersData) => {
     if (getAllMembersError) {
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
+      res.writeHead(401, { 'Content-Type': 'text/plain' });
       return res.end('SELECTING_MEMBERS_FAILED');
     }
     res.writeHead(200, { 'Content-Type': 'text/plain' });
@@ -128,7 +130,7 @@ const updateMember = (req, res) => {
     const personObj = JSON.parse(incomingData);
     query.updateMember(personObj, (updateMemberError, updateSuccessful) => {
       if (updateMemberError) {
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.writeHead(401, { 'Content-Type': 'text/plain' });
         return res.end('UPDATING_MEMBER_FAILED');
       }
       res.writeHead(200, { 'Content-Type': 'text/plain' });
@@ -146,7 +148,7 @@ const deleteMember = (req, res) => {
     const personObj = JSON.parse(incomingData);
     query.deleteMember(personObj, (deletingMemberError, deleteSuccessful) => {
       if (deletingMemberError) {
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.writeHead(401, { 'Content-Type': 'text/plain' });
         return res.end('DELETING_MEMBER_FAILED');
       }
       res.writeHead(200, { 'Content-Type': 'text/plain' });
@@ -155,6 +157,88 @@ const deleteMember = (req, res) => {
   });
 };
 
+const login = (req, res) => {
+  let incomingData = '';
+  req.on('data', (chunk) => {
+    incomingData += chunk.toString();
+  });
+  req.on('end', () => {
+    const loginSubject = JSON.parse(incomingData);
+    query.getLoginDetails(loginSubject.username, (noSuchUser, userDetails) => {
+      if (noSuchUser) {
+        res.writeHead(401, { 'Content-Type': 'text/plain' });
+        return res.end('noSuchUser');
+      }
+      bcryptFunctions.comparePasswords(loginSubject.password, userDetails.password, (errComparing, compareResult) => {
+        if (errComparing) {
+          res.writeHead(500, { 'Content-Type': 'text/plain' });
+          return res.end('errComparing');
+        }
+        if (!compareResult) {
+          res.writeHead(401, { 'Content-Type': 'text/plain' });
+          return res.end('NoUserMatch');
+        }
+        res.setHeader('Set-Cookie', [`token=${userDetails.access_token}`, 'logged_in=true', `username=${userDetails.username}`]);
+        res.setHeader('Location', '/report');
+        res.writeHead(302);
+        return res.end();
+      });
+    });
+  });
+};
+
+const addNewUserPage = (req, res) => {
+  fs.readFile(path.join(__dirname, '..', 'public', 'add-user.html'), (errIndex, fileAddUser) => {
+    if (errIndex) {
+      err500(req, res);
+    } else {
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(fileAddUser);
+    }
+  });
+};
+
+const addNewUser = (req, res) => {
+  let incomingData = '';
+  req.on('data', (chunk) => {
+    incomingData += chunk.toString();
+  });
+  req.on('end', () => {
+    // must add a condition where username exists!!
+    const newUserObj = JSON.parse(incomingData);
+    bcryptFunctions.hashPassword(newUserObj.password, (errorHashing, hashedPwd) => {
+      if (errorHashing) {
+        res.writeHead(401, { 'Content-Type': 'text/plain' });
+        return res.end('errorHashing');
+      }
+      const userPayload = {
+        username: newUserObj.username,
+        role: newUserObj.role,
+      };
+      token.createToken(userPayload, (errorCreatingToken, token) => {
+        if (errorCreatingToken) {
+          res.writeHead(401, { 'Content-Type': 'text/plain' });
+          return res.end('errorCreatingToken');
+        }
+        const newUser = {
+          username: newUserObj.username,
+          password: hashedPwd,
+          access_token: token,
+          role: newUserObj.role,
+        };
+        query.addNewUser(newUser, (errorAddingUser, addedSuccessfully) => {
+          if (errorAddingUser) {
+            res.writeHead(401, { 'Content-Type': 'text/plain' });
+            return res.end('errorAddingUser');
+          }
+          res.setHeader('location', '/add-new-user-area');
+          res.writeHead(302);
+          return res.end();
+        });
+      });
+    });
+  });
+};
 module.exports = {
   homePage,
   generic,
@@ -167,4 +251,7 @@ module.exports = {
   publicInfo,
   updateMember,
   deleteMember,
+  login,
+  addNewUserPage,
+  addNewUser,
 };
