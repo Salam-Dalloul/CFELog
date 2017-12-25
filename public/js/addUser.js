@@ -40,14 +40,12 @@ const addUser = () => {
         method: 'POST',
       }, (addUserError, userAddedSuccessfully) => {
         if (addUserError) {
-          return createPopup('Something went wrong!!', 'red');
-        } else if (userAddedSuccessfully === 'usernameExists') {
-          return createPopup('Username already exists!!', 'red');
+          return createPopup(`${addUserError}`, 'red');
         }
-        return createPopup('User is now added, thanks!', 'green');
         select('#username').value = '';
         select('#password').value = '';
         select('#passwordValidation').value = '';
+        return createPopup('User is now added, thanks!', 'green');
       });
     }
   } else {

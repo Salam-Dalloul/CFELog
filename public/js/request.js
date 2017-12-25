@@ -5,7 +5,7 @@ const request = (url, reqObject, cb) => {
       if (xhr.status === 200) {
         cb(null, xhr.responseText);
       } else {
-        cb(`Error Occured, ON: ${url}`);
+        cb(xhr.responseText);
       }
     }
   };
