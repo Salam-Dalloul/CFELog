@@ -1,31 +1,34 @@
 const handlers = require('./handlers');
+const checkPoint = require('./checkPoint');
 
 const router = (req, res) => {
   const endpoint = req.url;
   if (endpoint === '/') {
-    handlers.homePage(req, res);
+    checkPoint(req, res, handlers.homePage);
   } else if (endpoint.startsWith('/public/')) {
     handlers.generic(req, res);
   } else if (endpoint === '/add-member-area') {
-    handlers.addMemberPage(req, res);
+    checkPoint(req, res, handlers.addMemberPage);
   } else if (endpoint === '/report') {
-    handlers.reportPage(req, res);
+    checkPoint(req, res, handlers.reportPage);
   } else if (endpoint === '/add-member' && req.method === 'POST') {
-    handlers.addNewMember(req, res);
+    checkPoint(req, res, handlers.addNewMember);
   } else if (endpoint === '/get-data') {
-    handlers.getMembersData(req, res);
+    checkPoint(req, res, handlers.getMembersData);
   } else if (endpoint === '/public-info') {
     handlers.publicInfo(req, res);
   } else if (endpoint === '/update-member') {
-    handlers.updateMember(req, res);
+    checkPoint(req, res, handlers.updateMember);
   } else if (endpoint === '/delete-member') {
-    handlers.deleteMember(req, res);
+    checkPoint(req, res, handlers.deleteMember);
   } else if (endpoint === '/login') {
     handlers.login(req, res);
   } else if (endpoint === '/add-new-user-area') {
-    handlers.addNewUserPage(req, res);
+    checkPoint(req, res, handlers.addNewUserPage);
   } else if (endpoint === '/add-new-user') {
-    handlers.addNewUser(req, res);
+    checkPoint(req, res, handlers.addNewUser);
+  } else if (endpoint === '/logout') {
+    handlers.logout(req, res);
   } else {
     handlers.err404(req, res);
   }

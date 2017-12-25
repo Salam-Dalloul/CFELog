@@ -206,39 +206,52 @@ const addNewUser = (req, res) => {
   req.on('end', () => {
     // must add a condition where username exists!!
     const newUserObj = JSON.parse(incomingData);
-    bcryptFunctions.hashPassword(newUserObj.password, (errorHashing, hashedPwd) => {
-      if (errorHashing) {
-        res.writeHead(401, { 'Content-Type': 'text/plain' });
-        return res.end('errorHashing');
-      }
-      const userPayload = {
-        username: newUserObj.username,
-        role: newUserObj.role,
-      };
-      token.createToken(userPayload, (errorCreatingToken, token) => {
-        if (errorCreatingToken) {
-          res.writeHead(401, { 'Content-Type': 'text/plain' });
-          return res.end('errorCreatingToken');
-        }
-        const newUser = {
-          username: newUserObj.username,
-          password: hashedPwd,
-          access_token: token,
-          role: newUserObj.role,
-        };
-        query.addNewUser(newUser, (errorAddingUser, addedSuccessfully) => {
-          if (errorAddingUser) {
+    query.getLoginDetails(newUserObj.username, (noUser, userExists) => {
+      if (userExists === undefined) {
+        bcryptFunctions.hashPassword(newUserObj.password, (errorHashing, hashedPwd) => {
+          if (errorHashing) {
             res.writeHead(401, { 'Content-Type': 'text/plain' });
-            return res.end('errorAddingUser');
+            return res.end('errorHashing');
           }
-          res.setHeader('location', '/add-new-user-area');
-          res.writeHead(302);
-          return res.end();
+          const userPayload = {
+            username: newUserObj.username,
+            role: newUserObj.role,
+          };
+          token.createToken(userPayload, (errorCreatingToken, token) => {
+            if (errorCreatingToken) {
+              res.writeHead(401, { 'Content-Type': 'text/plain' });
+              return res.end('errorCreatingToken');
+            }
+            const newUser = {
+              username: newUserObj.username,
+              password: hashedPwd,
+              access_token: token,
+              role: newUserObj.role,
+            };
+            query.addNewUser(newUser, (errorAddingUser, addedSuccessfully) => {
+              if (errorAddingUser) {
+                res.writeHead(401, { 'Content-Type': 'text/plain' });
+                return res.end('errorAddingUser');
+              }
+              res.setHeader('location', '/add-new-user-area');
+              res.writeHead(302);
+              return res.end();
+            });
+          });
         });
-      });
+      }
+      res.writeHead(200, { 'Content-Type': 'text/plain' });
+      return res.end('usernameExists');
     });
   });
 };
+
+const logout = (req, res) => {
+  res.setHeader('Set-Cookie', ['token=;max-age=0', 'logged_in=;max-age=0', 'username=;max-age=0']);
+  res.writeHead(302, { location: '/' });
+  res.end();
+};
+
 module.exports = {
   homePage,
   generic,
@@ -254,4 +267,5 @@ module.exports = {
   login,
   addNewUserPage,
   addNewUser,
+  logout,
 };

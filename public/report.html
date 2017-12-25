@@ -3,21 +3,28 @@
   <head>
     <meta charset="utf-8">
     <title>Coding For Everone - Report</title>
+    <link rel="stylesheet" href="public/css/navbar.css">
     <link rel="stylesheet" href="public/css/report.css">
     <link rel="shortcut icon" href="public/img/favicon.ico" type="image/x-icon">
   </head>
   <body>
+    <section class="nav-bar">
+      <a href='/' class="nav-a" aria-label="Go to Report Window" title='View Report'><label class="nav-labels">Home</label>
+      </a>
+      <a href='/add-member-area' class="nav-a" aria-label="Goo to Add a Member Window" title='Add Member'><label class="nav-labels">Add Member</label>
+      </a>
+      <a href='/add-new-user-area' class="nav-a" aria-label="Goo to Add a User Window" title='Add User'><label class="nav-labels">Add User</label>
+      </a>
+      <a href='/public-info' class="nav-a" aria-label="Goo to CFE Info Window" title='CFE View'><label class="nav-labels">View Info</label>
+      </a>
+      <a href='/logout' class="nav-a" aria-label="Logout" title='Logout'><label class="nav-labels">Logout</label>
+      </a>
+    </section>
     <header class='head'>
-      <section class="nav-bar">
-        <a href='/' class="nav-a" aria-label="Go to Report Window" title='View Report'><label class="nav-labels">Home</label>
-        </a>
-        <a href='/add-member-area' class="nav-a" aria-label="Goo to Add a Member Window" title='Add Member'><label class="nav-labels">Add Member</label>
-        </a>
-      </section>
       <h1>CODING FOR EVERYONE - REPORT</h1>
       <label for="total-count">Total Count:</label><label id=total-count></label>
     </header>
-    </section>
+
     <script type="text/javascript" src='public/js/request.js'></script>
     <script type="text/javascript" src='public/js/validation.js'></script>
     <script type="text/javascript" src='public/js/buildReport.js'></script>

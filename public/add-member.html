@@ -4,23 +4,30 @@
     <meta charset="utf-8">
     <title>Coding For Everone - Registery</title>
     <link rel="stylesheet" href="public/css/add-member.css">
+    <link rel="stylesheet" href="public/css/navbar.css">
     <link rel="shortcut icon" href="public/img/favicon.ico" type="image/x-icon">
   </head>
   <body>
-    <section class="side-bar">
-      <a href='/' class="bar-a" aria-label="Goo to Add a Member Window" title='Add Member'><label class="bar-labels">Home</label>
+    <section class="nav-bar">
+      <a href='/' class="nav-a" aria-label="Go to Report Window" title='View Report'><label class="nav-labels">Home</label>
       </a>
-      <a href='/report' class="bar-a" aria-label="Go to Report Window" title='View Report'><label class="bar-labels">View Report</label>
+      <a href='/add-member-area' class="nav-a" aria-label="Goo to Add a Member Window" title='Add Member'><label class="nav-labels">Add Member</label>
+      </a>
+      <a href='/add-new-user-area' class="nav-a" aria-label="Goo to Add a User Window" title='Add User'><label class="nav-labels">Add User</label>
+      </a>
+      <a href='/public-info' class="nav-a" aria-label="Goo to CFE Info Window" title='CFE View'><label class="nav-labels">View Info</label>
+      </a>
+      <a href='/logout' class="nav-a" aria-label="Logout" title='Logout'><label class="nav-labels">Logout</label>
       </a>
     </section>
     <section class='container'>
-        <label for="name" class="inputs-labels">Name:<input placeholder="Name" id='name' aria-label="Participent Name" type="text" name="name" class='input-fields'></label>
-        <label for="phone" class="inputs-labels">Phone Number:<input placeholder="Phone Number" id='phone' aria-label="Participent Phone Number" type="text" name="phone" class='input-fields'></label>
-        <label for="code-wars-before" class="inputs-labels">CodeWars Before:<input placeholder="CodeWars Before" id='code-wars-before' aria-label="Participent Progress in CodeWars" type="text" name="code-wars" class='input-fields'></label>
-        <label for="code-wars-after" class="inputs-labels">CodeWars After:<input placeholder="CodeWars After" id='code-wars-after' aria-label="Participent Progress in CodeWars" type="text" name="code-wars" class='input-fields'></label>
-        <label for="free-code-camp-before" class="inputs-labels">FreeCodeCamp Before:<input placeholder="FreeCodeCamp Before" id='free-code-camp-before' aria-label="Participent Progress in FreeCodeCamp" type="text" name="free-code-camp" class='input-fields'></label>
-        <label for="free-code-camp-after" class="inputs-labels">FreeCodeCamp After:<input placeholder="FreeCodeCamp After" id='free-code-camp-after' aria-label="Participent Progress in FreeCodeCamp" type="text" name="free-code-camp" class='input-fields'></label>
-        <label for="notes" class="inputs-labels">Notes:<input placeholder="Notes" id='notes' aria-label="Notes on Participent" type="text" name="notes" class='input-fields'></label></label>
+        <label for="name" class="inputs-labels">Name:<input id='name' aria-label="Participent Name" type="text" name="name" class='input-fields'></label>
+        <label for="phone" class="inputs-labels">Phone Number:<input id='phone' aria-label="Participent Phone Number" type="text" name="phone" class='input-fields'></label>
+        <label for="code-wars-before" class="inputs-labels">CodeWars Before:<input id='code-wars-before' aria-label="Participent Progress in CodeWars" type="text" name="code-wars" class='input-fields'></label>
+        <label for="code-wars-after" class="inputs-labels">CodeWars After:<input id='code-wars-after' aria-label="Participent Progress in CodeWars" type="text" name="code-wars" class='input-fields'></label>
+        <label for="free-code-camp-before" class="inputs-labels">FreeCodeCamp Before:<input id='free-code-camp-before' aria-label="Participent Progress in FreeCodeCamp" type="text" name="free-code-camp" class='input-fields'></label>
+        <label for="free-code-camp-after" class="inputs-labels">FreeCodeCamp After:<input id='free-code-camp-after' aria-label="Participent Progress in FreeCodeCamp" type="text" name="free-code-camp" class='input-fields'></label>
+        <label for="notes" class="inputs-labels">Notes:<input id='notes' aria-label="Notes on Participent" type="text" name="notes" class='input-fields'></label></label>
         <button name="submit-form" onclick="submit()" class='submit-button'>Submit</button>
     </section>
     <script type="text/javascript" src='public/js/validation.js'></script>

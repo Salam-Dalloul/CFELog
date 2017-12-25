@@ -80,7 +80,6 @@ const getLoginDetails = (username, cb) => {
   });
 };
 
-
 module.exports = {
   addMember,
   getAllMembers,
