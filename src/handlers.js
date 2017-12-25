@@ -206,8 +206,13 @@ const addNewUser = (req, res) => {
   req.on('end', () => {
     // must add a condition where username exists!!
     const newUserObj = JSON.parse(incomingData);
-    query.getLoginDetails(newUserObj.username, (noUser, userExists) => {
-      if (userExists === undefined) {
+    console.log(newUserObj);
+    query.getLoginDetails(newUserObj.username, (noSuchUser, userDetails) => {
+      if (noSuchUser) {
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        return res.end('errorChekingUser');
+      }
+      if (!userDetails) {
         bcryptFunctions.hashPassword(newUserObj.password, (errorHashing, hashedPwd) => {
           if (errorHashing) {
             res.writeHead(401, { 'Content-Type': 'text/plain' });
@@ -230,6 +235,7 @@ const addNewUser = (req, res) => {
             };
             query.addNewUser(newUser, (errorAddingUser, addedSuccessfully) => {
               if (errorAddingUser) {
+                console.log(errorAddingUser);
                 res.writeHead(401, { 'Content-Type': 'text/plain' });
                 return res.end('errorAddingUser');
               }
@@ -239,13 +245,13 @@ const addNewUser = (req, res) => {
             });
           });
         });
+      } else if (userDetails) {
+        res.writeHead(401, { 'Content-Type': 'text/plain' });
+        return res.end('userAlreadyExists');
       }
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      return res.end('usernameExists');
     });
   });
 };
-
 const logout = (req, res) => {
   res.setHeader('Set-Cookie', ['token=;max-age=0', 'logged_in=;max-age=0', 'username=;max-age=0']);
   res.writeHead(302, { location: '/' });

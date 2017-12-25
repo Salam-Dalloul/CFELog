@@ -68,7 +68,7 @@ body{
 }
 
 .info-labels{
-  border-left: 1vh solid white;
+  border-left: 1vh solid black;
   padding-left: 1vh;
   font-size: 2.2vh;
 }
