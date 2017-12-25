@@ -22,28 +22,35 @@ const createPopup = (msgContent, bgColor) => {
 };
 
 const addUser = () => {
-  userObj = {
-    username: select('#username').value,
-    password: select('#password').value,
-    role: select('#role').value,
-  };
-  if (!userObj.username || !userObj.password || !userObj.role) {
-    createPopup('All Fields Must Be Filled!', 'red');
-  } else if (userObj.username.length < 4) {
-    createPopup('Username must be at least 4 letters!', 'red');
-  } else if (userObj.password.length < 8) {
-    createPopup('Password must be at least 8 characters!', 'red');
+  if (select('#passwordValidation').value == select('#password').value) {
+    userObj = {
+      username: select('#username').value,
+      password: select('#password').value,
+      role: 'admin',
+    };
+    if (!userObj.username || !userObj.password || !userObj.role) {
+      createPopup('All Fields Must Be Filled!', 'red');
+    } else if (userObj.username.length < 4) {
+      createPopup('Username must be at least 4 letters!', 'red');
+    } else if (userObj.password.length < 8) {
+      createPopup('Password must be at least 8 characters!', 'red');
+    } else {
+      request('/add-new-user', {
+        data: userObj,
+        method: 'POST',
+      }, (addUserError, userAddedSuccessfully) => {
+        if (addUserError) {
+          return createPopup('Something went wrong!!', 'red');
+        } else if (userAddedSuccessfully === 'usernameExists') {
+          return createPopup('Username already exists!!', 'red');
+        }
+        return createPopup('User is now added, thanks!', 'green');
+        select('#username').value = '';
+        select('#password').value = '';
+        select('#passwordValidation').value = '';
+      });
+    }
   } else {
-    request('/add-new-user', {
-      data: userObj,
-      method: 'POST',
-    }, (addUserError, userAddedSuccessfully) => {
-      if (addUserError) {
-        console.log(addUserError);
-        return createPopup('Something went wrong!!', 'red');
-      }
-      console.log(userAddedSuccessfully);
-      return createPopup('User is now added, thanks!', 'green');
-    });
+    createPopup('Passwords must match!', 'red');
   }
 };

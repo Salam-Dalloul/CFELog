@@ -54,29 +54,29 @@ body{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
-  min-width: 40%;
-  height: 90vh;
-  min-height: 90%;
-  background-color: lightgray;
-  border-radius: 5vh;
-  border-right: 0;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  box-shadow: 0px 0px 2vh black;
+  align-items: center;
+  min-width: 50%;
+  min-height: 50vh;
+  background: #f3f3f3;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  margin-top: 3vh;
+  padding: 2vh 0vh 2vh 0vh;
 }
 
 .input-fields{
   display: flex;
-  width: 90%;
-  height: 1vh;
-  padding: 2.5vh;
-  font-family: cursive;
+  height: 6vh;
   font-size: 2vh;
   border: 1px;
-  border-radius: 2vh;
   margin-bottom: 1vh;
   cursor: text;
+  width: 100%;
+}
+
+.inputs-labels{
+  font-size: 14px;
+  width: 90%;
+  padding: 0
 }
 
 .input-fields:focus{
@@ -84,6 +84,7 @@ body{
   border-left: 3px solid green;
   border-right: 3px solid green;
 }
+
 
 
 #notes {
@@ -96,8 +97,6 @@ body{
   border: none;
   border-left: 1vh solid green;
   font-size: 2vh;
-  font-family: cursive;
-  margin-left: 5vh
 }
 
 .submit-button:hover{
@@ -131,7 +130,6 @@ body{
   align-self: center;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.5);
   height: 100%;
   width: 100%;
 
@@ -148,11 +146,4 @@ body{
   border: 5px solid black;
   border-radius: 15px;
   padding: 3%
-}
-
-.inputs-labels{
-  width: 90%;
-  font-size: 14px;
-  margin-left: 3vh;
-  font-family: cursive;
 }

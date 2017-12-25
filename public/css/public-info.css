@@ -10,31 +10,40 @@
 body{
   display: flex;
   flex-direction: column;
+  align-items: center;
   min-height: 75vh;
   margin-top: 7.5vh;
   background-color: lightgray;
   background: url('http://www.demo.amitjakhu.com/login-form/images/bg.png');
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
 
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 70%;
+  min-height: 70vh;
+  background: #f3f3f3;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  margin-top: 3vh;
+  padding: 2vh 0vh 2vh 0vh;
 }
 
 .m-heading{
   display: flex;
-  font-size: 200%;
   color: rgb(244, 67, 54);
   align-self: center;
   text-shadow: 0.2px 2px 0px black;
-
+  font-size: 2em;
 }
 
 .m-label{
   margin-left: 5vh;
   margin-top: 5vh;
-  font-size: 150%;
   color: rgb(255, 24, 0);
-  text-align: left;
-  text-shadow: 0.2px 2px 0px #00545f;
-
+  font-size: 1.5em;
 }
 
 .m-body{

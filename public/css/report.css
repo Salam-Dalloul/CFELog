@@ -7,24 +7,20 @@
 
 body{
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-flow: column;
-  align-self: center;
   min-height: 75vh;
-  margin-top: 12.5vh;
   background-color: lightgray;
   background: url('http://www.demo.amitjakhu.com/login-form/images/bg.png');
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  margin-top: 10vh;
 }
 
 .head{
   display: flex;
   flex-direction: column;
   align-items: center;
-  top: 15px;
   justify-content: center;
-  margin-bottom: 10vh;
   text-align: center;
 }
 
@@ -36,7 +32,20 @@ body{
   position: relative;
   margin: 2.5%;
   flex-shrink: 1;
-  width: 85%
+  width: 95%
+}
+
+.container-head{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  background-color: lightgray;
+  padding: 2vh;
+  margin-top: 1vh;
+  background: #f3f3f3;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.5);
 }
 
 .one-person{
@@ -48,13 +57,13 @@ body{
   background-color: lightgray;
   padding: 2vh;
   margin-top: 1vh;
-  box-shadow: 0px 0px 2vh black;
+  background: #f3f3f3;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.5);
 }
 
 
 .data-labels, .info-labels{
   margin: 1vh;
-  font-family: monospace;
   font-size: 2vh;
 }
 
@@ -91,35 +100,6 @@ body{
 }
 
 
-.nav-bar{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  min-width: 25%;
-  top: 15vh;
-  background-color: white;
-  background-color: lightgray!important;
-  box-shadow: 0px 0px 2vh black;
-  margin: 3vh
-}
-
-.nav-a{
-  text-align: left;
-  padding: 1vh;
-  padding-left: 2vh;
-  margin: 0.5vh;
-  margin-left: 1.5vh;
-  margin-right: 1.5vh;
-  text-decoration: none;
-  font-size: 16px;
-  color: black;
-  font-family: monospace;
-}
-
-.nav-labels{
-  cursor: pointer;
-}
-
 .popup-section{
   display: flex;
   align-self: center;
@@ -150,14 +130,14 @@ body{
 .edit-container{
   display: flex;
   flex-direction: column;
+  position: fixed;
   justify-content: center;
   align-items: center;
-  min-width: 35%;
-  height: 85vh;
-  min-height: 85%;
-  background-color: lightgray;
-  border-radius: 5vh;
-  box-shadow: 0px 0px 2vh black;
+  min-width: 75%;
+  min-height: 80vh;
+  background: #f3f3f3;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  padding: 2vh 0vh 2vh 0vh;
 }
 
 .input-fields{
@@ -165,7 +145,6 @@ body{
   width: 80%;
   height: 2vh;
   padding: 2.5vh;
-  font-family: cursive;
   font-size: 2vh;
   border: 1px;
   border-radius: 2vh;
@@ -190,7 +169,6 @@ body{
   border: none;
   border-left: 1vh solid green;
   font-size: 2vh;
-  font-family: cursive;
 }
 
 .submit-button:hover{
@@ -205,13 +183,4 @@ body{
 .focus{
   border-left: 3px solid red;
   border-right: 3px solid red;
-}
-
-
-@media (max-width: 880px) {
-  .one-person{
-    flex-wrap: wrap;
-    flex-flow: wrap;
-    width: 90%
-  }
 }
