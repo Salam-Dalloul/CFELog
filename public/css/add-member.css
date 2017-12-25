@@ -27,13 +27,12 @@ body{
   background: #f3f3f3;
 	box-shadow: 0 1px 3px rgba(0,0,0,0.5);
   margin-top: 3vh;
-  padding: 2vh 0vh 2vh 0vh;
+  padding: 1vh 0vh 1vh 0vh;
 }
 
 .input-fields{
   display: flex;
   height: 6vh;
-  font-family: cursive;
   font-size: 2vh;
   border: 1px;
   margin-bottom: 1vh;
@@ -56,6 +55,7 @@ body{
 
 #notes {
   height: 15vh;
+  overflow-wrap: break-word;
 }
 
 .submit-button{
@@ -64,7 +64,6 @@ body{
   border: none;
   border-left: 1vh solid green;
   font-size: 2vh;
-  font-family: cursive;
 }
 
 .submit-button:hover{
@@ -98,7 +97,6 @@ body{
   align-self: center;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.5);
   height: 100%;
   width: 100%;
 

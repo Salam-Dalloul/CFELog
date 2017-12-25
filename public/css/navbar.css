@@ -3,7 +3,6 @@
   position: absolute;
   display: flex;
   width: 100%;
-  padding-left: 5vh;
   background: #f3f3f3;
   box-shadow: 0 1px 3px rgba(0,0,0,0.5);
 }

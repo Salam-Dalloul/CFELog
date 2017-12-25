@@ -109,6 +109,16 @@ const createEditSection = (member) => {
     e.preventDefault();
     updateMember(member.id);
   });
+
+  const closeBtn = create('button');
+  closeBtn.name = 'close-form';
+  closeBtn.className = 'close-form';
+  closeBtn.textContent = 'Close';
+  closeBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    select('body').removeChild(container);
+  });
+
   container.appendChild(personObj.name);
   container.appendChild(personObj.phone);
   container.appendChild(personObj.codeWarsBfr);
@@ -117,6 +127,7 @@ const createEditSection = (member) => {
   container.appendChild(personObj.freeCodeCampAft);
   container.appendChild(personObj.notes);
   container.appendChild(submitBtn);
+  container.appendChild(closeBtn);
   return container;
 };
 
@@ -154,20 +165,20 @@ const createDeleteBtn = (memberId) => {
   });
   return deleteBtn;
 };
+
 const createArticle = (member) => {
   const onePersonArticle = create('article');
-  onePersonArticle.className = 'one-person';
+  onePersonArticle.className = 'row-x';
 
-  const infoLables = {
-    id: create('label'),
-    name: create('label'),
-    phone: create('label'),
-    codeWars: create('label'),
-    freeCodeCamp: create('label'),
-    notes: create('label'),
+
+  const dataDivs = {
+    name: create('div'),
+    phone: create('div'),
+    codeWars: create('div'),
+    freeCodeCamp: create('div'),
+    notes: create('div'),
   };
   const dataLabels = {
-    id: create('label'),
     name: create('label'),
     phone: create('label'),
     codeWars: create('label'),
@@ -175,23 +186,17 @@ const createArticle = (member) => {
     notes: create('label'),
   };
 
-  infoLables.name.className = 'info-labels';
-  infoLables.phone.className = 'info-labels';
-  infoLables.codeWars.className = 'info-labels';
-  infoLables.freeCodeCamp.className = 'info-labels';
-  infoLables.notes.className = 'info-labels';
+  dataDivs.name.className = 'column-y';
+  dataDivs.phone.className = 'column-y';
+  dataDivs.codeWars.className = 'column-y cw';
+  dataDivs.freeCodeCamp.className = 'column-y fcc';
+  dataDivs.notes.className = 'column-y';
 
-  dataLabels.name.className = 'data-labels';
-  dataLabels.phone.className = 'data-labels';
-  dataLabels.codeWars.className = 'data-labels';
-  dataLabels.freeCodeCamp.className = 'data-labels';
-  dataLabels.notes.className = 'data-labels';
-
-  infoLables.name.textContent = 'Name';
-  infoLables.phone.textContent = 'Phone';
-  infoLables.codeWars.textContent = 'CodeWars';
-  infoLables.freeCodeCamp.textContent = 'FreeCodeCamp';
-  infoLables.notes.textContent = 'Notes';
+  dataLabels.name.className = 'column-labels';
+  dataLabels.phone.className = 'column-labels';
+  dataLabels.codeWars.className = 'column-labels';
+  dataLabels.freeCodeCamp.className = 'column-labels';
+  dataLabels.notes.className = 'column-labels notes';
 
   dataLabels.name.textContent = `${member.name}`;
   dataLabels.phone.textContent = `${member.phone}`;
@@ -199,34 +204,36 @@ const createArticle = (member) => {
   dataLabels.freeCodeCamp.textContent = `${member.fccb} - ${member.fcca}`;
   dataLabels.notes.textContent = `${member.notes}`;
 
+  const btnsDiv = create('div');
+  btnsDiv.className = 'column-y btns';
   const editBtn = createEditBtn(member);
   const deleteBtn = createDeleteBtn(member.id);
 
-  onePersonArticle.appendChild(infoLables.name);
-  onePersonArticle.appendChild(dataLabels.name);
-  onePersonArticle.appendChild(infoLables.phone);
-  onePersonArticle.appendChild(dataLabels.phone);
-  onePersonArticle.appendChild(infoLables.codeWars);
-  onePersonArticle.appendChild(dataLabels.codeWars);
-  onePersonArticle.appendChild(infoLables.freeCodeCamp);
-  onePersonArticle.appendChild(dataLabels.freeCodeCamp);
-  onePersonArticle.appendChild(infoLables.notes);
-  onePersonArticle.appendChild(dataLabels.notes);
-  onePersonArticle.appendChild(editBtn);
-  onePersonArticle.appendChild(deleteBtn);
+  dataDivs.name.appendChild(dataLabels.name);
+  dataDivs.phone.appendChild(dataLabels.phone);
+  dataDivs.codeWars.appendChild(dataLabels.codeWars);
+  dataDivs.freeCodeCamp.appendChild(dataLabels.freeCodeCamp);
+  dataDivs.notes.appendChild(dataLabels.notes);
+
+  btnsDiv.appendChild(editBtn);
+  btnsDiv.appendChild(deleteBtn);
+
+  onePersonArticle.appendChild(dataDivs.name);
+  onePersonArticle.appendChild(dataDivs.phone);
+  onePersonArticle.appendChild(dataDivs.codeWars);
+  onePersonArticle.appendChild(dataDivs.freeCodeCamp);
+  onePersonArticle.appendChild(dataDivs.notes);
+  onePersonArticle.appendChild(btnsDiv);
 
   return onePersonArticle;
 };
 
 const buildDom = (arrayOfMembers) => {
-  const container = create('container');
-  container.className = 'container';
-  const body = select('body');
+  const container = select('.metadata');
   arrayOfMembers.forEach((member) => {
     const memberArticle = createArticle(member);
     container.appendChild(memberArticle);
   });
-  body.appendChild(container);
   select('#total-count').innerHTML = arrayOfMembers.length;
 };
 
