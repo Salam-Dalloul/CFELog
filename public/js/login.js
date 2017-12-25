@@ -5,7 +5,6 @@ const create = type => document.createElement(type);
 const username = select('.username');
 const password = select('.password');
 const loginBtn = select('.button');
-// const request = (url, reqObject, cb) => {
 
 loginBtn.addEventListener('click', (e) => {
   e.preventDefault();
@@ -17,9 +16,9 @@ loginBtn.addEventListener('click', (e) => {
     method: 'POST',
   }, (loginError, trueLogin) => {
     if (loginError) {
-      return console.log(`${loginError}`);
+      select('.login-msg').textContent = 'Login Failed!';
+      return select('.login-msg').style.color = 'Red';
     }
-    window.location.pathname = '/report';
-    return console.log('confirmed');
+    return window.location.pathname = '/report';
   });
 });
