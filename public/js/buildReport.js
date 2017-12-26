@@ -166,6 +166,26 @@ const createDeleteBtn = (memberId) => {
   return deleteBtn;
 };
 
+const createHistoryBtn = (memberId) => {
+  const historyBtn = create('button');
+  historyBtn.className = 'history-button button';
+  historyBtn.textContent = '📰';
+  historyBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    const requestObj = {
+      data: memberId,
+      method: 'POST',
+    };
+    request('/get-member-history', requestObj, (historyFetchError, memberHistory) => {
+      if (historyFetchError) {
+        return createPopup('Failed to Fetch History..', 'red');
+      }
+      return console.log(memberHistory);
+    });
+  });
+  return historyBtn;
+};
+
 const createArticle = (member) => {
   const onePersonArticle = create('article');
   onePersonArticle.className = 'row-x';
@@ -208,6 +228,7 @@ const createArticle = (member) => {
   btnsDiv.className = 'column-y btns';
   const editBtn = createEditBtn(member);
   const deleteBtn = createDeleteBtn(member.id);
+  const historyBtn = createHistoryBtn(member.id);
 
   dataDivs.name.appendChild(dataLabels.name);
   dataDivs.phone.appendChild(dataLabels.phone);
@@ -217,6 +238,7 @@ const createArticle = (member) => {
 
   btnsDiv.appendChild(editBtn);
   btnsDiv.appendChild(deleteBtn);
+  btnsDiv.appendChild(historyBtn);
 
   onePersonArticle.appendChild(dataDivs.name);
   onePersonArticle.appendChild(dataDivs.phone);

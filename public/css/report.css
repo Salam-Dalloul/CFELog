@@ -45,6 +45,10 @@ body{
   background-color: lightgreen;
 }
 
+.history-button:hover{
+  background-color: brown;
+}
+
 .popup-section{
   display: flex;
   align-self: center;

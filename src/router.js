@@ -29,6 +29,8 @@ const router = (req, res) => {
     checkPoint(req, res, handlers.addNewUser);
   } else if (endpoint === '/logout') {
     handlers.logout(req, res);
+  } else if (endpoint === '/get-member-history') {
+    handlers.getMemberHistory(req, res);
   } else {
     handlers.err404(req, res);
   }
