@@ -1,3 +1,15 @@
+// CREATE TABLE members_history (
+//                         id SERIAL PRIMARY KEY,
+//                         user_id INTEGER references users(id),
+//                         cwb INTEGER NOT NULL,
+//                         cwa INTEGER NOT NULL,
+//                         fccb INTEGER NOT NULL,
+//                         fcca INTEGER NOT NULL,
+//                         notes VARCHAR(255)
+//                         )
+//                         ;
+// [F2] Smart Completion: ON  [F3] Multiline: ON   (Semi-colon [;] will end
+
 const connect = require('./dbConnection');
 
 const addMember = (name, phone, cwb, cwa, fccb, fcca, notes, cb) => {
@@ -40,6 +52,23 @@ const updateMember = (personObj, cb) => {
   });
 };
 
+const newMemberHistory = (personObj, cb) => {
+  const dateChild = new Date();
+  const dateToday = `${dateChild.getFullYear()}-${dateChild.getMonth()}-${dateChild.getDate()}`;
+  const updateMemberQuery = {
+    text: 'INSERT INTO members_history (member_id, cwb, cwa, fccb, fcca, notes, date) VALUES ($1, $2 ,$3, $4, $5, $6, $7)',
+    values: [personObj.id, personObj.codeWarsBfr, personObj.codeWarsAft, personObj.freeCodeCampBfr, personObj.freeCodeCampAft, `${personObj.notes}`, `${dateToday}`],
+  };
+  connect.query(updateMemberQuery, (updateError, success) => {
+    if (updateError) {
+      console.log(updateError);
+      return cb('UPDATE_FAILED', null);
+    }
+    return cb(null, 'UPDATE_DONE');
+  });
+};
+
+
 const deleteMember = (personId, cb) => {
   const deleteMemberQuery = {
     text: 'DELETE FROM members WHERE id=$1',
@@ -80,6 +109,19 @@ const getLoginDetails = (username, cb) => {
   });
 };
 
+const getMemberHistory = (memberId, cb) => {
+  const selectMemberHistoryQuery = {
+    text: 'SELECT * FROM members_history WHERE member_id = $1',
+    values: [memberId],
+  };
+  connect.query(selectMemberHistoryQuery, (fetchingHistoryFailed, historyArray) => {
+    if (fetchingHistoryFailed) {
+      return cb(fetchingHistoryFailed, null);
+    }
+    return cb(null, historyArray.rows);
+  });
+};
+
 module.exports = {
   addMember,
   getAllMembers,
@@ -87,4 +129,6 @@ module.exports = {
   deleteMember,
   getLoginDetails,
   addNewUser,
+  newMemberHistory,
+  getMemberHistory,
 };

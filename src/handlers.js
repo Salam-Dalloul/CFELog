@@ -133,8 +133,14 @@ const updateMember = (req, res) => {
         res.writeHead(401, { 'Content-Type': 'text/plain' });
         return res.end('UPDATING_MEMBER_FAILED');
       }
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      return res.end('UPDATING_MEMBER_DONE');
+      query.newMemberHistory(personObj, (newMemberHistoryError, newMemberHistorySuccessful) => {
+        if (newMemberHistoryError) {
+          res.writeHead(401, { 'Content-Type': 'text/plain' });
+          return res.end('UPDATING_MEMBER_HISTORY_FAILED');
+        }
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        return res.end('UPDATING_MEMBER_DONE');
+      });
     });
   });
 };
@@ -235,7 +241,6 @@ const addNewUser = (req, res) => {
             };
             query.addNewUser(newUser, (errorAddingUser, addedSuccessfully) => {
               if (errorAddingUser) {
-                console.log(errorAddingUser);
                 res.writeHead(401, { 'Content-Type': 'text/plain' });
                 return res.end('errorAddingUser');
               }
@@ -252,6 +257,25 @@ const addNewUser = (req, res) => {
     });
   });
 };
+
+const getMemberHistory = (req, res) => {
+  let incomingData = '';
+  req.on('data', (chunk) => {
+    incomingData += chunk.toString();
+  });
+  req.on('end', () => {
+    const memberId = JSON.parse(incomingData);
+    query.getMemberHistory(memberId, (errorFetchingHistory, history) => {
+      if (errorFetchingHistory) {
+        res.writeHead(401, { 'Content-Type': 'text/plain' });
+        return res.end('errorFetchingHistory');
+      }
+      res.writeHead(200, { 'Content-Type': 'text/plain' });
+      return res.end(JSON.stringify(history));
+    });
+  });
+};
+
 const logout = (req, res) => {
   res.setHeader('Set-Cookie', ['token=;max-age=0', 'logged_in=;max-age=0', 'username=;max-age=0']);
   res.writeHead(302, { location: '/' });
@@ -274,4 +298,5 @@ module.exports = {
   addNewUserPage,
   addNewUser,
   logout,
+  getMemberHistory,
 };
