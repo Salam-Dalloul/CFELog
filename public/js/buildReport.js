@@ -166,7 +166,55 @@ const createDeleteBtn = (memberId) => {
   return deleteBtn;
 };
 
-const createHistoryBtn = (memberId) => {
+const createHistoryContainer = (container, memberHistory, memberName) => {
+  const headDivs = {
+    cw: create('div'),
+    fcc: create('div'),
+    notes: create('div'),
+    date: create('div'),
+  };
+
+  headDivs.cw.className = 'column-y cw';
+  headDivs.fcc.className = 'column-y fcc';
+  headDivs.notes.className = 'column-y';
+  headDivs.date.className = 'column-y';
+
+  const divsLabels = {
+    cw: create('label'),
+    fcc: create('label'),
+    notes: create('label'),
+    date: create('label'),
+  };
+
+  divsLabels.cw.className = 'column-labels';
+  divsLabels.fcc.className = 'column-labels';
+  divsLabels.notes.className = 'column-labels';
+  divsLabels.date.className = 'column-labels';
+
+  divsLabels.cw.textContent = `${memberHistory.cwb}-${memberHistory.cwa}`;
+  divsLabels.fcc.textContent = `${memberHistory.fccb}-${memberHistory.fcca}`;
+  divsLabels.notes.textContent = memberHistory.notes;
+  divsLabels.date.textContent = memberHistory.date;
+
+
+  headDivs.cw.appendChild(divsLabels.cw);
+  headDivs.fcc.appendChild(divsLabels.fcc);
+  headDivs.notes.appendChild(divsLabels.notes);
+  headDivs.date.appendChild(divsLabels.date);
+
+  const historyArticle = create('article');
+  historyArticle.className = 'row-x';
+
+  historyArticle.appendChild(headDivs.cw);
+  historyArticle.appendChild(headDivs.fcc);
+  historyArticle.appendChild(headDivs.notes);
+  historyArticle.appendChild(headDivs.date);
+
+  container.appendChild(historyArticle);
+  select('body').appendChild(container);
+};
+
+const createHistoryBtn = (memberId, memberName) => {
   const historyBtn = create('button');
   historyBtn.className = 'history-button button';
   historyBtn.textContent = '📰';
@@ -180,7 +228,22 @@ const createHistoryBtn = (memberId) => {
       if (historyFetchError) {
         return createPopup('Failed to Fetch History..', 'red');
       }
-      return console.log(memberHistory);
+      const memberHistoryArray = JSON.parse(memberHistory);
+      const container = create('section');
+
+      const headInfo = create('div');
+      headInfo.className = 'head-info';
+      const nameLabel = create('label');
+      nameLabel.textContent = `Name: ${memberName}`;
+      const headArticle = create('article');
+      headArticle.className = 'row-head';
+
+      headInfo.appendChild(nameLabel);
+      headArticle.appendChild(headInfo);
+      container.appendChild(headArticle);
+
+      container.className = 'history-container';
+      memberHistoryArray.forEach(dateObject => createHistoryContainer(container, dateObject, memberName));
     });
   });
   return historyBtn;
@@ -228,7 +291,7 @@ const createArticle = (member) => {
   btnsDiv.className = 'column-y btns';
   const editBtn = createEditBtn(member);
   const deleteBtn = createDeleteBtn(member.id);
-  const historyBtn = createHistoryBtn(member.id);
+  const historyBtn = createHistoryBtn(member.id, member.name);
 
   dataDivs.name.appendChild(dataLabels.name);
   dataDivs.phone.appendChild(dataLabels.phone);
