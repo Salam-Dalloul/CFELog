@@ -23,10 +23,10 @@ const updateMember = (memberId) => {
       id: memberId,
       name: select('#name').value,
       phone: select('#phone').value,
-      codeWarsBfr: select('#code-wars-before').value,
-      codeWarsAft: select('#code-wars-after').value,
-      freeCodeCampBfr: select('#free-code-camp-before').value,
-      freeCodeCampAft: select('#free-code-camp-after').value,
+      cwb: select('#code-wars-before').value,
+      cwa: select('#code-wars-after').value,
+      fccb: select('#free-code-camp-before').value,
+      fcca: select('#free-code-camp-after').value,
       notes: select('#notes').value,
     },
     method: 'POST',
@@ -159,7 +159,7 @@ const createDeleteBtn = (memberId) => {
         if (errorDeleting) {
           return createPopup('Failed to Update..', 'red');
         }
-        return createPopup('Deleted Successfylly', 'red');
+        return createPopup('Deleted Successfylly', 'green');
       });
     }
   });
@@ -205,6 +205,7 @@ const createHistoryContainer = (container, memberHistory, memberName) => {
   const historyArticle = create('article');
   historyArticle.className = 'row-x';
 
+
   historyArticle.appendChild(headDivs.cw);
   historyArticle.appendChild(headDivs.fcc);
   historyArticle.appendChild(headDivs.notes);
@@ -241,9 +242,18 @@ const createHistoryBtn = (memberId, memberName) => {
       headInfo.appendChild(nameLabel);
       headArticle.appendChild(headInfo);
       container.appendChild(headArticle);
+      const closeBtn = create('button');
+      closeBtn.name = 'close-form';
+      closeBtn.className = 'close-form';
+      closeBtn.textContent = 'Close';
+      closeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        select('body').removeChild(container);
+      });
 
       container.className = 'history-container';
       memberHistoryArray.forEach(dateObject => createHistoryContainer(container, dateObject, memberName));
+      container.appendChild(closeBtn);
     });
   });
   return historyBtn;

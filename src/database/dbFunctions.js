@@ -14,7 +14,7 @@ const connect = require('./dbConnection');
 
 const addMember = (name, phone, cwb, cwa, fccb, fcca, notes, cb) => {
   const addQuery = {
-    text: 'INSERT INTO members (name, phone, cwb, cwa, fccb, fcca, notes) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+    text: 'INSERT INTO members (name, phone, cwb, cwa, fccb, fcca, notes) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
     values: [`${name}`, `${phone}`, `${cwb}`, `${cwa}`, `${fccb}`, `${fcca}`, `${notes}`],
   };
 
@@ -22,7 +22,7 @@ const addMember = (name, phone, cwb, cwa, fccb, fcca, notes, cb) => {
     if (addError) {
       return cb(addError, null);
     }
-    return cb(null, 'ADDED_SUCCESSFULLY');
+    return cb(null, success.rows);
   });
 };
 
@@ -41,11 +41,10 @@ const getAllMembers = (cb) => {
 const updateMember = (personObj, cb) => {
   const updateMemberQuery = {
     text: 'UPDATE members SET name=$1, phone=$2, cwb=$3, cwa=$4, fccb=$5, fcca=$6, notes=$7 WHERE id = $8',
-    values: [`${personObj.name}`, personObj.phone, personObj.codeWarsBfr, personObj.codeWarsAft, personObj.freeCodeCampBfr, personObj.freeCodeCampAft, `${personObj.notes}`, personObj.id],
+    values: [`${personObj.name}`, personObj.phone, personObj.cwb, personObj.cwa, personObj.fccb, personObj.fcca, `${personObj.notes}`, personObj.id],
   };
   connect.query(updateMemberQuery, (updateError, success) => {
     if (updateError) {
-      console.log(updateError);
       return cb('UPDATE_FAILED', null);
     }
     return cb(null, 'UPDATE_DONE');
@@ -57,7 +56,7 @@ const newMemberHistory = (personObj, cb) => {
   const dateToday = `${dateChild.getFullYear()}-${dateChild.getMonth()}-${dateChild.getDate()}`;
   const updateMemberQuery = {
     text: 'INSERT INTO members_history (member_id, cwb, cwa, fccb, fcca, notes, date) VALUES ($1, $2 ,$3, $4, $5, $6, $7)',
-    values: [personObj.id, personObj.codeWarsBfr, personObj.codeWarsAft, personObj.freeCodeCampBfr, personObj.freeCodeCampAft, `${personObj.notes}`, `${dateToday}`],
+    values: [personObj.id, personObj.cwb, personObj.cwa, personObj.fccb, personObj.fcca, `${personObj.notes}`, `${dateToday}`],
   };
   connect.query(updateMemberQuery, (updateError, success) => {
     if (updateError) {
@@ -70,15 +69,25 @@ const newMemberHistory = (personObj, cb) => {
 
 
 const deleteMember = (personId, cb) => {
-  const deleteMemberQuery = {
-    text: 'DELETE FROM members WHERE id=$1',
+  const deleteHistoryQuery = {
+    text: 'DELETE FROM members_history WHERE member_id=$1',
     values: [personId],
   };
-  connect.query(deleteMemberQuery, (deleteError, successDeleting) => {
-    if (deleteError) {
-      return cb('DELETE_FAILED', null);
+  connect.query(deleteHistoryQuery, (deleteHistoryError, successHistoryDeletion) => {
+    if (deleteHistoryError) {
+      return cb('DELETE_HISTORY_ERROR');
     }
-    return cb(null, 'DELETE_DONE');
+    const deleteMemberQuery = {
+      text: 'DELETE FROM members WHERE id=$1',
+      values: [personId],
+    };
+    connect.query(deleteMemberQuery, (deleteError, successDeleting) => {
+      if (deleteError) {
+        console.log(deleteError);
+        return cb('DELETE_FAILED', null);
+      }
+      return cb(null, 'DELETE_DONE');
+    });
   });
 };
 
