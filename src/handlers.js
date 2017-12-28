@@ -93,8 +93,15 @@ const addNewMember = (req, res) => {
         res.writeHead(401, { 'Content-Type': 'text/plain' });
         return res.end('ADDING_ERROR_FAILED');
       }
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      res.end('USER_ADDED');
+      console.log(result[0]);
+      query.newMemberHistory(result[0], (newMemberHistoryError, newMemberHistorySuccessful) => {
+        if (newMemberHistoryError) {
+          res.writeHead(401, { 'Content-Type': 'text/plain' });
+          return res.end('UPDATING_MEMBER_HISTORY_FAILED');
+        }
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        return res.end('USER_ADDED');
+      });
     });
   });
 };
@@ -265,6 +272,7 @@ const getMemberHistory = (req, res) => {
   });
   req.on('end', () => {
     const memberId = JSON.parse(incomingData);
+    console.log(memberId);
     query.getMemberHistory(memberId, (errorFetchingHistory, history) => {
       if (errorFetchingHistory) {
         res.writeHead(401, { 'Content-Type': 'text/plain' });
