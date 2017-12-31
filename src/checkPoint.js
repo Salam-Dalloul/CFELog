@@ -21,4 +21,5 @@ module.exports = (req, res, cb) => {
     res.writeHead(302, { location: '/' });
     res.end();
   }
+  return null;
 };

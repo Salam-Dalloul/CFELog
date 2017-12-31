@@ -93,7 +93,6 @@ const addNewMember = (req, res) => {
         res.writeHead(401, { 'Content-Type': 'text/plain' });
         return res.end('ADDING_ERROR_FAILED');
       }
-      console.log(result[0]);
       query.newMemberHistory(result[0], (newMemberHistoryError, newMemberHistorySuccessful) => {
         if (newMemberHistoryError) {
           res.writeHead(401, { 'Content-Type': 'text/plain' });
@@ -102,6 +101,7 @@ const addNewMember = (req, res) => {
         res.writeHead(200, { 'Content-Type': 'text/plain' });
         return res.end('USER_ADDED');
       });
+      return null;
     });
   });
 };
@@ -148,6 +148,7 @@ const updateMember = (req, res) => {
         res.writeHead(200, { 'Content-Type': 'text/plain' });
         return res.end('UPDATING_MEMBER_DONE');
       });
+      return null;
     });
   });
 };
@@ -196,6 +197,7 @@ const login = (req, res) => {
         res.writeHead(302);
         return res.end();
       });
+      return null;
     });
   });
 };
@@ -219,7 +221,6 @@ const addNewUser = (req, res) => {
   req.on('end', () => {
     // must add a condition where username exists!!
     const newUserObj = JSON.parse(incomingData);
-    console.log(newUserObj);
     query.getLoginDetails(newUserObj.username, (noSuchUser, userDetails) => {
       if (noSuchUser) {
         res.writeHead(500, { 'Content-Type': 'text/plain' });
@@ -235,7 +236,7 @@ const addNewUser = (req, res) => {
             username: newUserObj.username,
             role: newUserObj.role,
           };
-          token.createToken(userPayload, (errorCreatingToken, token) => {
+          token.createToken(userPayload, (errorCreatingToken, accessToken) => {
             if (errorCreatingToken) {
               res.writeHead(401, { 'Content-Type': 'text/plain' });
               return res.end('errorCreatingToken');
@@ -243,7 +244,7 @@ const addNewUser = (req, res) => {
             const newUser = {
               username: newUserObj.username,
               password: hashedPwd,
-              access_token: token,
+              access_token: accessToken,
               role: newUserObj.role,
             };
             query.addNewUser(newUser, (errorAddingUser, addedSuccessfully) => {
@@ -255,12 +256,15 @@ const addNewUser = (req, res) => {
               res.writeHead(302);
               return res.end();
             });
+            return null;
           });
+          return null;
         });
       } else if (userDetails) {
         res.writeHead(401, { 'Content-Type': 'text/plain' });
         return res.end('userAlreadyExists');
       }
+      return null;
     });
   });
 };
@@ -272,7 +276,6 @@ const getMemberHistory = (req, res) => {
   });
   req.on('end', () => {
     const memberId = JSON.parse(incomingData);
-    console.log(memberId);
     query.getMemberHistory(memberId, (errorFetchingHistory, history) => {
       if (errorFetchingHistory) {
         res.writeHead(401, { 'Content-Type': 'text/plain' });

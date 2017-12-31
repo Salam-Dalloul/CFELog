@@ -1,15 +1,3 @@
-// CREATE TABLE members_history (
-//                         id SERIAL PRIMARY KEY,
-//                         user_id INTEGER references users(id),
-//                         cwb INTEGER NOT NULL,
-//                         cwa INTEGER NOT NULL,
-//                         fccb INTEGER NOT NULL,
-//                         fcca INTEGER NOT NULL,
-//                         notes VARCHAR(255)
-//                         )
-//                         ;
-// [F2] Smart Completion: ON  [F3] Multiline: ON   (Semi-colon [;] will end
-
 const connect = require('./dbConnection');
 
 const addMember = (name, phone, cwb, cwa, fccb, fcca, notes, cb) => {
@@ -88,6 +76,7 @@ const deleteMember = (personId, cb) => {
       }
       return cb(null, 'DELETE_DONE');
     });
+    return null;
   });
 };
 

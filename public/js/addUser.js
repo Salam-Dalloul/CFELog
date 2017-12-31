@@ -1,10 +1,6 @@
 const select = selector => document.querySelector(selector);
 const create = type => document.createElement(type);
 
-select('.submit-button').addEventListener('click', (e) => {
-  e.preventDefault();
-  addUser();
-});
 
 const createPopup = (msgContent, bgColor) => {
   const section = create('section');
@@ -52,3 +48,8 @@ const addUser = () => {
     createPopup('Passwords must match!', 'red');
   }
 };
+
+select('.submit-button').addEventListener('click', (e) => {
+  e.preventDefault();
+  addUser();
+});
