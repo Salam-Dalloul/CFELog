@@ -9,4 +9,16 @@ const createToken = (payload, cb) => {
   });
 };
 
-module.exports = { createToken };
+const verifyToken = (token, cb) => {
+  jwt.verify(token, process.env.SECRET, (errVerifingToken, decoded) => {
+    if (errVerifingToken) {
+      return cb(errVerifingToken);
+    }
+    return cb(null, decoded);
+  });
+};
+
+module.exports = {
+  createToken,
+  verifyToken,
+};
