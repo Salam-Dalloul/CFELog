@@ -48,7 +48,6 @@ const newMemberHistory = (personObj, cb) => {
   };
   connect.query(updateMemberQuery, (updateError, success) => {
     if (updateError) {
-      console.log(updateError);
       return cb('UPDATE_FAILED', null);
     }
     return cb(null, 'UPDATE_DONE');

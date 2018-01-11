@@ -1,0 +1,55 @@
+<header class='head'>
+  <h1>CODING FOR EVERYONE - REPORT</h1>
+</header>
+<section class="metahead">
+  <div class="head-info">
+    <label for="total-count">Total Count:</label><label id=total-count>{{membersCount}}</label>
+  </div>
+  <article class="row-head">
+    <div class="column-y">
+      <label class="column-labels">Name</label>
+    </div>
+    <div class="column-y">
+      <label class="column-labels">Phone</label>
+    </div>
+    <div class="column-y cw">
+      <label class="column-labels">CW</label>
+    </div>
+    <div class="column-y fcc">
+      <label class="column-labels">FCC</label>
+    </div>
+    <div class="column-y">
+      <label class="column-labels">Notes</label>
+    </div>
+    <div class="column-y btns">
+      <label>Action</label>
+    </div>
+  </article>
+  <section class="metadata">
+    {{#each member}}
+    <article class="row-x">
+      <div class="column-y">
+        <label id='{{id}}' class="column-labels id">{{name}}</label>
+      </div>
+      <div class="column-y">
+        <label class="column-labels">{{phone}}</label>
+      </div>
+      <div class="column-y cw">
+        <label class="column-labels">{{cwb}} - {{cwa}}</label>
+      </div>
+      <div class="column-y fcc">
+        <label class="column-labels">{{fcca}} - {{fccb}}</label>
+      </div><div class="column-y">
+        <label class="column-labels notes">{{notes}}</label>
+      </div>
+      <div class="column-y btns">
+        <button class="edit-button button" onclick="updateMember(this)">🖉</button>
+        <button class="history-button button" onclick="viewHistory(this)">📰</button>
+        <button class="delete-button button" onclick="deleteMember(this)">✖</button>
+      </div>
+    </article>
+    {{/each}}
+  </section>
+</section>
+
+<script src="js/reportFunctions.js"></script>
