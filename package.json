@@ -4,8 +4,8 @@
   "description": "CFE log, Gaza Sky Geeks",
   "main": "index.js",
   "scripts": {
-    "start": "node src/server.js",
-    "watch": "nodemon src/server.js"
+    "start": "node src",
+    "watch": "nodemon src"
   },
   "keywords": [],
   "author": "SULTAN H.",
@@ -14,12 +14,19 @@
     "eslint": "^4.13.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
-    "nodemon": "^1.12.5"
+    "nodemon": "^1.12.5",
+    "supertest": "^3.0.0",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.8.0"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.2",
     "env2": "^2.2.0",
+    "express": "^4.16.2",
+    "express-handlebars": "^3.0.0",
     "jsonwebtoken": "^8.1.0",
-    "pg": "^7.4.0"
+    "pg": "^7.4.0",
+    "serve-favicon": "^2.4.5"
   }
 }
