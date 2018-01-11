@@ -15,8 +15,8 @@ const hashPassword = (pwd, cb) => {
   });
 };
 
-const comparePasswords = (password, hashPassword, cb) => {
-  bcryptjs.compare(password, hashPassword, (errorComparing, passOrNot) => {
+const comparePasswords = (password, hashedPassword, cb) => {
+  bcryptjs.compare(password, hashedPassword, (errorComparing, passOrNot) => {
     if (errorComparing) {
       return cb(errorComparing);
     }

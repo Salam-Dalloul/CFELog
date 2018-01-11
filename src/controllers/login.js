@@ -10,7 +10,9 @@ exports.post = (req, res) => {
   loginQuery({ username: req.body.username }, (dataBaseConnectionError, userArray) => {
     if (dataBaseConnectionError) return (res.status(500).send({ error: dataBaseConnectionError }));
     else if (userArray === 'User Not Found') return res.send({ responseText: 'Authintication Error' });
-    bcrypt.comparePasswords(req.body.password, userArray[0].password, (errorComparing, passOrNot) => {
+    const plainPWD = req.body.password;
+    const hashedPWD = userArray[0].password;
+    bcrypt.comparePasswords(plainPWD, hashedPWD, (errorComparing, passOrNot) => {
       if (errorComparing) return res.status(500).send({ error: errorComparing });
       else if (!passOrNot) {
         return res.send({ responseText: 'Authintication Error' });

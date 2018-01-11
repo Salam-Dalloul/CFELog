@@ -5,7 +5,7 @@
   <div class="head-info">
     <label for="total-count">Total Count:</label><label id=total-count>{{membersCount}}</label>
   </div>
-  <article class="row-head">
+  <div class="row-head">
     <div class="column-y">
       <label class="column-labels">Name</label>
     </div>
@@ -24,10 +24,10 @@
     <div class="column-y btns">
       <label>Action</label>
     </div>
-  </article>
+  </div>
   <section class="metadata">
     {{#each member}}
-    <article class="row-x">
+    <div class="row-x">
       <div class="column-y">
         <label id='{{id}}' class="column-labels id">{{name}}</label>
       </div>
@@ -47,7 +47,7 @@
         <button class="history-button button" onclick="viewHistory(this)">📰</button>
         <button class="delete-button button" onclick="deleteMember(this)">✖</button>
       </div>
-    </article>
+    </div>
     {{/each}}
   </section>
 </section>
