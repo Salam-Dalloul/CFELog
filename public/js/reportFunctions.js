@@ -1,28 +1,32 @@
 function deleteMember(element) {
-  const body = {
-    id: element.parentElement.parentElement.children[0].children[0].id,
-  };
-  const headers = {
-    headers: {
-      Accept: 'application/json, text/plain, */*',
-      'Content-Type': 'application/json',
-    },
-    method: 'POST',
-    body: JSON.stringify(body),
-  };
+  const confirmation = confirm('Are You Sure About Deleting This Member?');
+  if (confirmation) {
+    const body = {
+      id: element.parentElement.parentElement.children[0].children[0].id,
+    };
+    const headers = {
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify(body),
+    };
 
-  fetch('/delete-member', headers)
-    .then(res => res.json())
-    .then((res) => {
-      if (res.responseText === 'Deleting History Failed' || res.responseText === 'Deleting Member Failed') {
-        createPopup('Deleting Member Failed', 'red');
-      } else if (res.responseText === 'Deleted Successfully') {
-        window.location.pathname = '/report';
-      }
-    })
-    .catch((err) => {
-      createPopup('Something Went Wrong', 'red');
-    });
+    fetch('/delete-member', headers)
+      .then(res => res.json())
+      .then((res) => {
+        if (res.responseText === 'Deleting History Failed' || res.responseText === 'Deleting Member Failed') {
+          createPopup('Deleting Member Failed', 'red');
+        } else if (res.responseText === 'Deleted Successfully') {
+          element.parent;
+          window.location.pathname = '/report';
+        }
+      })
+      .catch((err) => {
+        createPopup('Something Went Wrong', 'red');
+      });
+  }
 }
 
 function updateMember(element) {
@@ -57,6 +61,7 @@ function updateMember(element) {
   personObj.codeWarsBfr.id = 'code-wars-before';
   personObj.codeWarsBfr.type = 'text';
   personObj.codeWarsBfr.name = 'code-wars';
+
   personObj.codeWarsBfr.className = 'input-fields';
   personObj.codeWarsBfr.value = parentElement.children[2].children[0].textContent.split(' - ')[0];
 
@@ -174,14 +179,15 @@ function viewHistory(element) {
 
       const headInfo = create('div');
       headInfo.className = 'head-info';
+
       const nameLabel = create('label');
       nameLabel.textContent = `Name: ${memberName}`;
+
       const headArticle = create('article');
       headArticle.className = 'row-head';
 
       headInfo.appendChild(nameLabel);
       headArticle.appendChild(headInfo);
-      container.appendChild(headArticle);
       const closeBtn = create('button');
       closeBtn.name = 'close-form';
       closeBtn.className = 'close-form';
@@ -190,6 +196,7 @@ function viewHistory(element) {
         e.preventDefault();
         select('body').removeChild(container);
       });
+      container.appendChild(headArticle);
 
       res.forEach((member) => {
         const headDivs = {
