@@ -22,10 +22,14 @@ select('.submit-button').addEventListener('click', (event) => {
   fetch('/add-member', headers)
     .then(res => res.json())
     .then((res) => {
-      if (res.responseText === 'Insert Unsuccessful') {
+      if (res.responseText === 'Member Already Exists') {
+        createPopup('Member Already Exists', 'red');
+      } else if (res.responseText === 'Insert Unsuccessful') {
         createPopup('Insert Unsuccessful', 'red');
       } else if (res.responseText === 'Insert Successful') {
         createPopup('Insert is Successful', 'green');
+      } else {
+        createPopup(res);
       }
     })
     .catch((err) => {

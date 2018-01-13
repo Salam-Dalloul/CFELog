@@ -1,5 +1,5 @@
 const express = require('express');
-const checkPoint = require('../mw/checkPoint.js');
+// const checkPoint = require('../mw/checkPoint.js');
 
 const router = express.Router();
 const login = require('./login');
@@ -13,7 +13,7 @@ const deleteMember = require('./deleteMember');
 const updateMember = require('./updateMember');
 const viewHistory = require('./viewHistory');
 
-router.get('/', checkPoint, login.get);
+router.get('/', login.get);
 router.get('/add-member-area', addMember.get);
 router.get('/add-new-user-area', addUser.get);
 router.get('/public-info', publicInfo.get);

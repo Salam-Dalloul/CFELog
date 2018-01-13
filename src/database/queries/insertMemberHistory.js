@@ -7,6 +7,7 @@ const insertMemberHistory = (memberRow, cb) => {
   };
   dbConnection.query(historySql, (dataBaseConnectionError, newMemberHistory) => {
     if (dataBaseConnectionError) return cb(dataBaseConnectionError);
+    else if (newMemberHistory.rowCount !== 1) return cb('Error Inserting Member History');
     return cb(null, newMemberHistory);
   });
 };
